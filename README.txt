@@ -6,4 +6,4 @@ TASKPOINT V6
 - External Pexels stock-video links are used per task, with the supplied local MP4 as playback fallback if an external video cannot load.
 - Notification rail is enabled with clearly marked DEMO data. Replace with verified backend payment records before production; do not present demo notifications as real payments.
 - TaskPoint V9 update
-V9 connected to Vercel
+- V9 connected to Vercel
