@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="sw">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="TaskPoint — Kamilisha task na fuata hatua za account rasmi.">
+  <title>TaskPoint — Kamilisha Task</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="nav">
+  <button class="menu-btn" id="menuBtn">☰</button>
+  <a class="logo" href="#home" aria-label="TaskPoint home"><span class="logo-icon">✦</span><span>TASKPOINT<small>VIDEO TASK • KAMILISHA KWA SEKUNDE 10</small></span></a>
+  <nav class="desktop-nav">
+    <a href="#home">Nyumbani</a><a href="#about">Kuhusu Sisi</a><a href="#how">Jinsi Inavyofanya Kazi</a>
+    <a href="#faq">Maswali</a><a href="#contact">Wasiliana Nasi</a>
+  </nav>
+  <div class="nav-actions">
+    <a class="wa" data-link="whatsapp" target="_blank">◉ WhatsApp</a>
+    <a class="channel" data-link="channel" target="_blank">♟ Channel / Group</a>
+    <a class="account" data-link="registration" target="_blank">♙ FUNGUA ACCOUNT</a>
+  </div>
+</header>
+
+<div class="drawer" id="drawer">
+  <button id="drawerClose">×</button>
+  <a href="#home">Nyumbani</a><a href="#about">Kuhusu Sisi</a><a href="#tasks">Tasks</a>
+  <a href="#how">Jinsi Inavyofanya Kazi</a><a href="#testimonials">Maoni</a><a href="#contact">Wasiliana Nasi</a>
+</div>
+
+<main id="home">
+  <section class="hero shell">
+    <div class="live-strip" id="liveStrip"></div>
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <span class="pill">⚡ TASKPOINT • MFUMO WA VIDEO TASK</span>
+        <h1>Fungua Video,<br><em>Kamilisha Task</em></h1>
+        <p>Fungua task yoyote, video inaanza ndani ya mfumo, subiri sekunde 10 na mfumo utaonyesha kuwa task imekamilika. Thamani ya task ni moja kwa siku nzima.</p>
+        <div class="benefits">
+          <div><b>◈</b><span><strong>Rahisi & Haraka</strong><small>Task rahisi unaweza kufanya popote.</small></span></div>
+          <div><b>▣</b><span><strong>Thamani ya Siku</strong><small>Task zote zina kiasi kimoja kwa siku.</small></span></div>
+          <div><b>◎</b><span><strong>Video Flow</strong><small>Video + countdown + completion.</small></span></div>
+        </div>
+        <div class="hero-cta">
+          <a class="btn yellow" href="#tasks">▶ KAMILISHA TASK SASA</a>
+          <a class="btn outline" data-link="registration" target="_blank">♙ JISAJILI SASA <small>(Fungua Account)</small></a>
+        </div>
+      </div>
+
+      <div class="hero-media">
+        <div class="video-wrap">
+          <video id="heroVideo" controls playsinline muted poster="">
+            <source src="VID-20260902-WA0001.mp4" type="video/mp4">
+          </video>
+          <div class="video-fallback">Weka video yako ya hero kwenye project</div>
+        </div>
+        <div class="stats"><div><b id="heroTaskCount">40</b><span>Tasks za Leo</span></div><div><b>10s</b><span>Video Countdown</span></div><div><b id="dailyReward">Tsh 3,000</b><span>Kiasi kwa Task</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tasks-section shell" id="tasks">
+    <div class="section-head">
+      <div><span class="kicker">TASKS</span><h2>Kamilisha Task</h2></div>
+      <div class="datebox"><span id="today"></span><strong id="taskCount">40 TASKS LEO</strong></div>
+    </div>
+    <p class="section-note"><b id="rewardNote">Kila task leo: Tsh 3,000</b> • Chagua task, fungua video, subiri sekunde 10, kisha itaonekana <b>IMEKAMILIKA</b>. <span id="cycleLabel"></span></p>
+    <div class="task-grid" id="taskGrid"></div>
+    <button class="more-btn" id="moreBtn">ANGALIA TASK NYINGINE ↓</button>
+  </section>
+
+  <section class="testimonials shell" id="testimonials">
+    <div class="center-head"><span class="kicker">MAONI</span><h2>Maoni ya Watumiaji</h2><p>Maoni mafupi ya watumiaji, pamoja na majina na ruhusa za wahusika, huwekwa hapa.</p></div>
+    <div class="testimonial-grid" id="testimonialGrid"></div>
+  </section>
+
+  <section class="how shell" id="how">
+    <div class="center-head"><span class="kicker">HATUA</span><h2>JINSI INAVYOFANYA KAZI</h2></div>
+    <div class="how-grid">
+      <div><i>1</i><h3>Chagua Task</h3><p>Chagua task unayoona kwenye orodha yako.</p></div>
+      <div><i>2</i><h3>Kamilisha Task</h3><p>Fungua video na kamilisha muda unaoonyeshwa.</p></div>
+      <div><i>3</i><h3>Thibitisha</h3><p>Baada ya timer, soma ujumbe wa task.</p></div>
+      <div><i>4</i><h3>Fungua Account</h3><p>Ikiwa unataka kuendelea, tumia website rasmi ya usajili.</p></div>
+    </div>
+  </section>
+
+  <section class="activation shell" id="activation">
+    <div class="activation-card">
+      <div>
+        <span class="kicker">ACCOUNT ACTIVATION</span>
+        <h2>WEZESHA ACCOUNT</h2>
+        <p class="activation-lead">Ada ya kuwezesha account: <strong>Tsh <span id="activationFee">14,500</span></strong></p>
+        <div class="activation-benefits">
+          <div><b>GB 10</b><span>Data ya kutumia kukamilisha task</span></div>
+          <div><b>Bonus Tsh <span id="activationBonus">5,000</span></b><span>Bonus baada ya kulipia</span></div>
+        </div>
+        <p class="activation-note"><strong>UKILIPIA MTAJI UTAPOKEA HIZI GB 10 NA BONUS YA 5000:</strong> hakikisha Namba yako ya simu wakati unaandika ili GB 10 na bonus ziingie kwenye namba yako halisi</p>
+        <a class="btn yellow" data-link="registration" target="_blank">FUNGUA ACCOUNT & ACTIVATE →</a>
+      </div>
+      <div class="activation-badge"><span>ACCOUNT</span><b>ACTIVE</b><small>Baada ya kulipia</small></div>
+    </div>
+  </section>
+
+  <section class="company shell" id="about">
+    <div class="center-head">
+      <span class="kicker">UTHIBITISHO WA BIASHARA</span>
+      <h2>TAARIFA ZA USAJILI</h2>
+      <p>Angalia nyaraka za biashara zilizowekwa kwenye ukurasa huu.</p>
+    </div>
+    <div class="cert-grid cert-grid-three">
+      <article class="cert">
+        <div class="cert-img"><img src="assets/brella-extract.jpg" alt="BRELA Extract from Register"></div>
+        <div class="cert-copy">
+          <span class="verified">✓ DOCUMENT</span>
+          <h3>BRELA — Extract from Register</h3>
+          <p><b>Business Name:</b> ADSBLOG APP</p>
+          <p><b>Registration No:</b> 703306</p>
+          <p><b>Registration:</b> 29/05/2026</p>
+          <button class="cert-btn" data-cert="assets/brella-extract.jpg">ANGALIA HATI</button>
+        </div>
+      </article>
+
+      <article class="cert">
+        <div class="cert-img"><img src="assets/brella-certificate.jpg" alt="BRELA Certificate of Registration"></div>
+        <div class="cert-copy">
+          <span class="verified">✓ DOCUMENT</span>
+          <h3>BRELA — Certificate of Registration</h3>
+          <p><b>Business Name:</b> ADSBLOG APP</p>
+          <p><b>Registration No:</b> 703306</p>
+          <p><b>Date:</b> 29 May 2026</p>
+          <button class="cert-btn" data-cert="assets/brella-certificate.jpg">ANGALIA HATI</button>
+        </div>
+      </article>
+
+      <article class="cert">
+        <div class="cert-img"><img src="assets/tra-business-licence.jpg" alt="Tanzania Business Licence"></div>
+        <div class="cert-copy">
+          <span class="verified">✓ DOCUMENT</span>
+          <h3>TRA / Business Licence</h3>
+          <p><b>Licence holder:</b> MOSSES TECHNOLOGY HELP COMPANY LIMITED</p>
+          <p><b>Business:</b> Advertisement Agency</p>
+          <p><b>Licence No:</b> 20000200484</p>
+          <button class="cert-btn" data-cert="assets/tra-business-licence.jpg">ANGALIA HATI</button>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="faq shell" id="faq">
+    <div class="center-head"><span class="kicker">FAQ</span><h2>Maswali Yanayoulizwa</h2></div>
+    <details><summary>Task zinafanyikaje?</summary><p>Chagua task, fungua video na subiri countdown ya sekunde 10. Ujumbe wa mwisho utaonyesha hatua inayofuata.</p></details>
+    <details><summary>Account activation inafanyikaje?</summary><p>Sehemu ya activation inaonyesha ada na benefits ulizo-configure. Kabla ya kwenda live, hakikisha malipo na benefits vinaunganishwa na backend halisi.</p></details>
+    <details><summary>Ninaweza kuwasiliana nanyi wapi?</summary><p>Tumia WhatsApp au Channel/Group iliyowekwa kwenye navigation.</p></details>
+  </section>
+</main>
+
+<footer id="contact">
+  <div class="footer-brand"><span class="logo-icon">✦</span><b>TASKPOINT</b><small>VIDEO TASK • KAMILISHA KWA SEKUNDE 10</small></div>
+  <div><h4>Haraka</h4><a href="#home">Nyumbani</a><a href="#about">Kuhusu Sisi</a><a href="#how">Jinsi Inavyofanya Kazi</a><a href="#faq">Maswali</a></div>
+  <div><h4>Msaada</h4><a href="#tasks">Kamilisha Task</a><a data-link="registration" target="_blank">Fungua Account</a><a data-link="whatsapp" target="_blank">Wasiliana</a></div>
+  <div><h4>Wasiliana Nasi</h4><span>WhatsApp: <b id="phoneText"></b></span><span>Email: <b id="emailText"></b></span><span>Tanzania</span></div>
+</footer>
+
+<a class="floating-wa" data-link="whatsapp" target="_blank">◉</a>
+
+<div class="modal-bg" id="taskModal">
+  <div class="modal">
+    <button class="modal-x" id="modalX">×</button>
+    <div class="modal-video"><video id="taskVideo" playsinline muted></video><div class="count" id="count">10</div><div class="video-status">VIDEO TASK • SEKUNDE 10</div></div>
+    <div class="modal-body">
+      <div class="success">✓</div>
+      <h2><span id="modalTaskName">Task</span> — <span id="completionText">Video inaendelea…</span></h2>
+      <div class="amount">+<span id="amount">3,000</span> TZS</div>
+      <p></p>
+      <div id="completion" class="completion"><span>✓</span><b>IMEKAMILIKA <small>Ili malipo yako yakufikie moja kwa moja kwenye laini yako Jisajili hapa chini wezesha Account yako</small></b></div><a class="btn yellow full" data-link="registration" target="_blank">FUNGUA ACCOUNT →</a>
+      <button class="other" id="otherBtn">Angalia Task Nyingine</button>
+    </div>
+  </div>
+</div>
+
+<div class="cert-modal" id="certModal">
+  <button id="certModalClose">×</button>
+  <img id="certViewer" alt="Certificate viewer">
+</div>
+
+<div class="toast-stack" id="toastStack"></div>
+<script src="app.js"></script>
+</body>
+</html>
