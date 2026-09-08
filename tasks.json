@@ -1,0 +1,12 @@
+{
+  "date": "YYYY-MM-DD",
+  "tasks": [
+    {
+      "id": 1,
+      "title": "SIM Card",
+      "reward": "2500",
+      "video": "product-01.mp4"
+    }
+  ],
+  "note": "Populate this file/server response with the real 40–60 tasks and actual task values for the day."
+}

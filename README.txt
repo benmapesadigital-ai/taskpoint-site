@@ -1,0 +1,11 @@
+TASKPOINT PRO V10 — OFFICIAL FRONTEND UPDATE
+- Existing V9 structure preserved and redesigned with a clean official/corporate visual system.
+- Mobile top navigation keeps WhatsApp, Channel/Group and FUNGUA ACCOUNT visible together.
+- Task date, weekday and live Tanzania time update automatically.
+- Daily tasks are generated from a large local pool and a task key is never reused in the same browser's local storage.
+- The current day's task list is persisted so refreshing the page does not replace today's tasks.
+- Completed tasks are locked for the day and cannot credit the wallet twice.
+- Balance and Total Earnings are stored in browser localStorage and update when a task reaches IMEKAMILIKA.
+- Withdraw opens a form for the requested amount; the withdrawal is not paid automatically. The user is shown the requested registration/activation message and JAZA FOMU button.
+- IMPORTANT: Balance, Total and task history in this static V10 build are frontend/local-demo data. Real money, withdrawals, account activation and permanent no-repeat task history require a secure backend/database before production.
+- Existing registration, WhatsApp, Channel/Group, certificates, FAQ, activation section, videos and other site content remain.
