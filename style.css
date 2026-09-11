@@ -352,3 +352,108 @@ body{
 .faq summary{color:#fff}
 .faq summary::marker{color:#ffd21a}
 .faq p{color:#d9edf7!important}
+/* ================================
+   TASK CARDS — MOBILE PREMIUM
+================================ */
+
+@media (max-width:760px){
+
+  .tasks-section{
+    width:100%;
+    padding-left:16px;
+    padding-right:16px;
+    overflow:hidden;
+  }
+
+  .tasks-section .section-head{
+    display:flex;
+    flex-direction:column;
+    align-items:stretch;
+    gap:14px;
+  }
+
+  .tasks-section .section-head h2{
+    color:#ffffff !important;
+    font-size:30px;
+    margin-top:8px;
+  }
+
+  /* TASK ONE PER ROW */
+  .task-grid{
+    display:grid !important;
+    grid-template-columns:1fr !important;
+    gap:14px !important;
+    width:100%;
+  }
+
+  .task{
+    width:100%;
+    min-width:0;
+    box-sizing:border-box;
+    padding:10px !important;
+    border-radius:18px;
+  }
+
+  .task-art{
+    width:100%;
+    height:190px !important;
+    border-radius:14px;
+    overflow:hidden;
+  }
+
+  .task-art video{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+  }
+
+  .task-info{
+    padding:10px 4px 4px;
+  }
+
+  .task h3{
+    font-size:15px !important;
+    line-height:1.3;
+    margin:0;
+  }
+
+  .task-info strong{
+    display:block;
+    margin-top:6px !important;
+    font-size:15px !important;
+  }
+
+  .task button{
+    width:100%;
+    min-height:44px;
+    font-size:12px !important;
+    font-weight:900;
+    border-radius:10px;
+    margin-top:8px;
+  }
+}
+
+/* EXTRA SMALL PHONES */
+@media (max-width:420px){
+
+  .tasks-section{
+    padding-left:12px;
+    padding-right:12px;
+  }
+
+  .task-grid{
+    gap:12px !important;
+  }
+
+  .task-art{
+    height:175px !important;
+  }
+
+  .task h3{
+    font-size:14px !important;
+  }
+
+  .task-info strong{
+    font-size:14px !important;
+  }
+    }
