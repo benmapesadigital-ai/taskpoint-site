@@ -117,6 +117,63 @@ body{
 .task.is-complete{border-color:#8bd8c0;background:#f3fcf8}
 .task.is-complete button{background:#00a878}
 .datebox{background:#eaf5f7;border-color:#b9dbe1;color:#0b5260}
+/* TASK DATE & TIME — PREMIUM */
+.datebox{
+  background:linear-gradient(135deg,#10162d,#171f3d);
+  border:1px solid #2d3b66;
+  border-radius:14px;
+  padding:12px 16px;
+  min-width:190px;
+  box-shadow:0 8px 25px rgba(0,0,0,.22);
+  text-align:right;
+}
+
+.datebox span{
+  display:block;
+  color:#ffffff;
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:.5px;
+}
+
+.datebox small{
+  display:block;
+  margin-top:4px;
+  color:#45e6ff;
+  font-size:12px;
+  font-weight:700;
+}
+
+.datebox strong{
+  display:block;
+  margin-top:7px;
+  color:#ffd84d;
+  font-size:11px;
+  font-weight:900;
+  letter-spacing:.6px;
+}
+
+/* MOBILE */
+@media(max-width:760px){
+  .datebox{
+    width:100%;
+    min-width:0;
+    text-align:center;
+    padding:11px 12px;
+  }
+
+  .datebox span{
+    font-size:11px;
+  }
+
+  .datebox small{
+    font-size:11px;
+  }
+
+  .datebox strong{
+    font-size:10px;
+  }
+}
 .more-btn{border-color:#155eef;color:#155eef;background:#fff}
 .activation-card{background:linear-gradient(135deg,#0b1f33,#123c5d);box-shadow:0 18px 45px rgba(11,31,51,.18)}
 .activation-badge{background:radial-gradient(circle,rgba(0,166,199,.24),rgba(0,166,199,.04) 62%,transparent 63%);border-color:rgba(0,166,199,.35)}
