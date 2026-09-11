@@ -520,3 +520,29 @@ body{
     font-size:14px !important;
   }
     }
+/* TOAST — SLIDE UP & DISAPPEAR */
+.evidence-toast{
+  animation:toastSlideUp 6s ease-in-out forwards !important;
+}
+
+@keyframes toastSlideUp{
+  0%{
+    opacity:0;
+    transform:translateY(50px);
+  }
+
+  10%{
+    opacity:1;
+    transform:translateY(0);
+  }
+
+  75%{
+    opacity:1;
+    transform:translateY(-8px);
+  }
+
+  100%{
+    opacity:0;
+    transform:translateY(-60px);
+  }
+}
