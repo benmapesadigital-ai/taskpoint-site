@@ -8,6 +8,8 @@
   <meta name="keywords" content="TaskPoint Pro, TaskPointPro.com, Jiajiri Kwa Simu, Simu Ni Ajira, jiajiri kwa simu Tanzania, digital tasks Tanzania, online tasks Tanzania, video tasks Tanzania, digital opportunities Tanzania">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://www.taskpointpro.com/">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#16d96f">
   <title>TaskPoint Pro | Jiajiri Kwa Simu & Digital Tasks Tanzania</title>
   <meta property="og:type" content="website">
   <meta property="og:title" content="TaskPoint Pro | Jiajiri Kwa Simu & Digital Tasks Tanzania">
@@ -296,5 +298,16 @@
 
 <div class="toast-stack" id="toastStack"></div>
 <script src="app.js"></script>
+
+  <script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("/service-worker.js")
+      .then(() => console.log("TaskPoint Pro Service Worker registered"))
+      .catch(err => console.error("Service Worker registration failed:", err));
+  });
+}
+  </script>
+  
 </body>
 </html>
