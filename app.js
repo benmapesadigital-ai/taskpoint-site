@@ -387,3 +387,39 @@ function tpUpdateNow(){
   },300);
 
 }
+
+/* =========================================================
+   TASKPOINT PRO — UPDATE DETECTOR V4
+   ========================================================= */
+
+if ("serviceWorker" in navigator) {
+
+  navigator.serviceWorker.addEventListener("message", event => {
+
+    if (
+      event.data &&
+      event.data.type === "TASKPOINT_UPDATE"
+    ) {
+
+      showUpdateMessage();
+
+    }
+
+  });
+
+  navigator.serviceWorker.addEventListener(
+    "controllerchange",
+    () => {
+
+      if (!window.__tpReloading) {
+
+        window.__tpReloading = true;
+
+        window.location.reload();
+
+      }
+
+    }
+  );
+
+    }
