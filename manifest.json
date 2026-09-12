@@ -1,0 +1,18 @@
+{
+  "name": "TaskPoint Pro",
+  "short_name": "TaskPoint Pro",
+  "description": "TaskPoint Pro — Digital Tasks & Opportunities",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#07111f",
+  "theme_color": "#16d96f",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/assets/taskpointpro-logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
