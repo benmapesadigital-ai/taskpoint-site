@@ -826,3 +826,222 @@ body{
   }
 
 }
+
+/* =========================================================
+   TASKPOINT PRO — FINAL ACTION PANEL
+   HATUA A
+   ========================================================= */
+
+/* Header iscroll pamoja na page */
+.nav{
+  position:relative !important;
+  top:auto !important;
+}
+
+/* Action area */
+.nav-actions{
+  display:grid !important;
+  grid-template-columns:repeat(4,minmax(0,1fr)) !important;
+  gap:10px !important;
+  width:auto !important;
+  margin-left:auto !important;
+  margin-top:0 !important;
+}
+
+/* Main cards */
+.action-card{
+  position:relative !important;
+  display:grid !important;
+  grid-template-columns:auto 1fr auto !important;
+  grid-template-rows:1fr auto !important;
+  align-items:center !important;
+  min-width:155px !important;
+  min-height:92px !important;
+  padding:12px 12px 34px !important;
+  border-radius:16px !important;
+  overflow:hidden !important;
+  text-decoration:none !important;
+  color:#fff !important;
+  border:1px solid rgba(255,255,255,.30) !important;
+  box-shadow:0 8px 25px rgba(0,0,0,.20) !important;
+}
+
+/* Icon */
+.action-card-icon{
+  width:43px !important;
+  height:43px !important;
+  border-radius:50% !important;
+  display:grid !important;
+  place-items:center !important;
+  font-size:21px !important;
+  font-weight:900 !important;
+  background:rgba(255,255,255,.18) !important;
+  border:1px solid rgba(255,255,255,.55) !important;
+}
+
+/* Text */
+.action-card-content{
+  position:static !important;
+  margin-left:10px !important;
+  min-width:0 !important;
+}
+
+.action-card-content strong{
+  display:block !important;
+  font-size:13px !important;
+  line-height:1.15 !important;
+  white-space:nowrap !important;
+}
+
+.action-card-content small{
+  display:block !important;
+  margin-top:4px !important;
+  font-size:8px !important;
+  line-height:1.25 !important;
+  opacity:.9 !important;
+}
+
+/* Arrow */
+.action-card-arrow{
+  position:static !important;
+  width:30px !important;
+  height:30px !important;
+  border-radius:50% !important;
+  display:grid !important;
+  place-items:center !important;
+  background:#fff !important;
+  color:#111 !important;
+  font-size:18px !important;
+  font-weight:900 !important;
+}
+
+/* Bottom CTA */
+.action-card-cta{
+  position:absolute !important;
+  left:10px !important;
+  right:10px !important;
+  bottom:7px !important;
+  height:20px !important;
+  border-radius:12px !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  background:rgba(0,0,0,.25) !important;
+  font-size:7px !important;
+  font-weight:900 !important;
+  letter-spacing:.3px !important;
+}
+
+/* Colors */
+.whatsapp-action{
+  background:linear-gradient(135deg,#08d66b,#009b58) !important;
+}
+
+.channel-action{
+  background:linear-gradient(135deg,#168cff,#0756df) !important;
+}
+
+.account-action{
+  background:linear-gradient(135deg,#ffb000,#ef5a00) !important;
+}
+
+.app-action{
+  background:linear-gradient(135deg,#a100ff,#5b18d6) !important;
+}
+
+
+/* ================= MOBILE ================= */
+
+@media(max-width:760px){
+
+  .nav{
+    height:auto !important;
+    min-height:66px !important;
+    padding:9px 10px 12px !important;
+    flex-wrap:wrap !important;
+  }
+
+  .nav-actions{
+    width:100% !important;
+    margin:3px 0 0 !important;
+    display:grid !important;
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    gap:9px !important;
+    order:3 !important;
+  }
+
+  .action-card{
+    min-width:0 !important;
+    min-height:105px !important;
+    padding:10px 10px 31px !important;
+    border-radius:15px !important;
+  }
+
+  .action-card-icon{
+    width:42px !important;
+    height:42px !important;
+    font-size:20px !important;
+  }
+
+  .action-card-content{
+    margin-left:8px !important;
+  }
+
+  .action-card-content strong{
+    font-size:12px !important;
+  }
+
+  .action-card-content small{
+    font-size:8px !important;
+  }
+
+  .action-card-arrow{
+    width:28px !important;
+    height:28px !important;
+    font-size:17px !important;
+  }
+
+  .action-card-cta{
+    left:9px !important;
+    right:9px !important;
+    bottom:6px !important;
+    height:19px !important;
+    font-size:7px !important;
+  }
+}
+
+
+/* ================= SMALL PHONES ================= */
+
+@media(max-width:390px){
+
+  .nav-actions{
+    gap:7px !important;
+  }
+
+  .action-card{
+    min-height:98px !important;
+    padding:9px 8px 29px !important;
+  }
+
+  .action-card-icon{
+    width:38px !important;
+    height:38px !important;
+    font-size:18px !important;
+  }
+
+  .action-card-content strong{
+    font-size:11px !important;
+  }
+
+  .action-card-content small{
+    font-size:7px !important;
+  }
+
+  .action-card-arrow{
+    width:25px !important;
+    height:25px !important;
+    font-size:15px !important;
+  }
+
+}
