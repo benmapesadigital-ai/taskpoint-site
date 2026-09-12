@@ -9,49 +9,48 @@ const APP_SHELL = [
   "/assets/taskpointpro-logo.png"
 ];
 
-
-/* INSTALL */
 self.addEventListener("install", event => {
 
   event.waitUntil(
-
     caches.open(CACHE_NAME).then(cache => {
-
       return cache.addAll(APP_SHELL);
-
     })
-
   );
+
+  self.skipWaiting();
 
 });
 
-
-/* ACTIVATE */
 self.addEventListener("activate", event => {
 
   event.waitUntil(
 
-    caches.keys().then(keys => {
+    Promise.all([
 
-      return Promise.all(
+      caches.keys().then(keys => {
 
-        keys
-          .filter(key => key !== CACHE_NAME)
-          .map(key => caches.delete(key))
+        return Promise.all(
+          keys
+            .filter(key => key !== CACHE_NAME)
+            .map(key => caches.delete(key))
+        );
 
-      );
+      }),
 
-    })
+      self.clients.claim()
+
+    ])
 
   );
 
 });
 
-
-/* Tell old page that new worker can activate */
 self.addEventListener("message", event => {
 
-  if(event.data && event.data.type === "SKIP_WAITING"){
+  if (
+    event.data &&
+    event.data.type === "SKIP_WAITING"
+  ) {
 
     self.skipWaiting();
 
@@ -59,18 +58,6 @@ self.addEventListener("message", event => {
 
 });
 
-
-/* Take control */
-self.addEventListener("activate", event => {
-
-  event.waitUntil(
-    self.clients.claim()
-  );
-
-});
-
-
-/* FETCH */
 self.addEventListener("fetch", event => {
 
   event.respondWith(
