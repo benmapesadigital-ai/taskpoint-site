@@ -136,3 +136,212 @@ const stack=$('#toastStack');let ni=0;const toastClasses=['toast-violet','toast-
 const tg=$('#testimonialGrid');COMMUNITY.forEach((t,i)=>{const e=document.createElement('article');e.className='testimonial';e.innerHTML=`<div class="person"><div class="avatar avatar-${i%4}" aria-hidden="true">${t[0]}</div><div><b>${t[1]}</b><span class="country">${t[2]}</span><div class="stars" aria-label="5 stars">★★★★★</div></div></div><p>“${t[3]}”</p>`;tg.appendChild(e)});
 $('#menuBtn').onclick=()=>$('#drawer').classList.add('open');$('#drawerClose').onclick=()=>$('#drawer').classList.remove('open');$$('.drawer a').forEach(a=>a.onclick=()=>$('#drawer').classList.remove('open'));
 const cm=$('#certModal'),cv=$('#certViewer');$$('[data-cert]').forEach(b=>b.onclick=()=>{cv.src=b.dataset.cert;cm.classList.add('show')});$('#certModalClose').onclick=()=>cm.classList.remove('show');cm.addEventListener('click',e=>{if(e.target===cm)cm.classList.remove('show')});$('#heroVideo')?.play?.().catch?.(()=>{});
+
+/* =========================================================
+   TASKPOINT PRO — APP INSTALL + UPDATE SYSTEM
+   ========================================================= */
+
+let deferredInstallPrompt = null;
+
+/* Android / Chrome install prompt */
+window.addEventListener("beforeinstallprompt", (event) => {
+  event.preventDefault();
+  deferredInstallPrompt = event;
+
+  document.querySelectorAll('[data-app-install]').forEach(btn => {
+    btn.style.display = "";
+  });
+});
+
+
+async function installTaskPointApp(){
+
+  /* Already running as installed app */
+  if (
+    window.matchMedia("(display-mode: standalone)").matches ||
+    window.navigator.standalone === true
+  ){
+    showAppMessage(
+      "TASKPOINT PRO APP",
+      "App tayari imewekwa kwenye simu yako. ✅"
+    );
+    return;
+  }
+
+  /* Browser supports install prompt */
+  if (deferredInstallPrompt){
+
+    deferredInstallPrompt.prompt();
+
+    const result = await deferredInstallPrompt.userChoice;
+
+    if(result.outcome === "accepted"){
+      deferredInstallPrompt = null;
+    }
+
+    return;
+  }
+
+  /* Installation not available yet */
+  showAppMessage(
+    "PAKUA APP",
+    "Fungua TaskPointPro.com kwa Chrome kisha bonyeza PAKUA APP."
+  );
+}
+
+
+/* App message */
+function showAppMessage(title, message){
+
+  const old = document.getElementById("tpAppMessage");
+  if(old) old.remove();
+
+  const box = document.createElement("div");
+
+  box.id = "tpAppMessage";
+
+  box.innerHTML = `
+    <div class="tp-app-message-box">
+      <button class="tp-app-message-close" onclick="this.parentElement.parentElement.remove()">×</button>
+      <b>${title}</b>
+      <span>${message}</span>
+    </div>
+  `;
+
+  document.body.appendChild(box);
+}
+
+
+/* Connect Pakua App buttons */
+document.addEventListener("click", (event) => {
+
+  const btn = event.target.closest("[data-app-install]");
+
+  if(!btn) return;
+
+  event.preventDefault();
+
+  installTaskPointApp();
+
+});
+
+
+/* =========================================================
+   APP UPDATE DETECTION
+   ========================================================= */
+
+if("serviceWorker" in navigator){
+
+  window.addEventListener("load", async () => {
+
+    try{
+
+      const registration =
+        await navigator.serviceWorker.register("/service-worker.js");
+
+      console.log("TaskPoint Pro Service Worker registered");
+
+      /* Check for new version */
+      registration.update();
+
+      registration.addEventListener("updatefound", () => {
+
+        const newWorker = registration.installing;
+
+        if(!newWorker) return;
+
+        newWorker.addEventListener("statechange", () => {
+
+          if(
+            newWorker.state === "installed" &&
+            navigator.serviceWorker.controller
+          ){
+
+            showUpdateMessage();
+
+          }
+
+        });
+
+      });
+
+    }catch(error){
+
+      console.error(
+        "TaskPoint Pro Service Worker error:",
+        error
+      );
+
+    }
+
+  });
+
+}
+
+
+/* Update notification */
+function showUpdateMessage(){
+
+  if(document.getElementById("tpUpdateBox")) return;
+
+  const box = document.createElement("div");
+
+  box.id = "tpUpdateBox";
+
+  box.innerHTML = `
+    <div class="tp-update-box">
+
+      <div class="tp-update-icon">↻</div>
+
+      <div class="tp-update-content">
+
+        <strong>UPDATE MPYA INAPATIKANA</strong>
+
+        <span>
+          Toleo jipya la TaskPoint Pro limepatikana.
+          Sasisha app ili upate maboresho mapya.
+        </span>
+
+        <div class="tp-update-actions">
+
+          <button
+            type="button"
+            onclick="tpUpdateNow()"
+            class="tp-update-btn">
+            SASISHA SASA
+          </button>
+
+          <button
+            type="button"
+            onclick="document.getElementById('tpUpdateBox').remove()"
+            class="tp-update-later">
+            BAADAYE
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+  `;
+
+  document.body.appendChild(box);
+}
+
+
+/* Reload to activate new version */
+function tpUpdateNow(){
+
+  if(navigator.serviceWorker.controller){
+
+    navigator.serviceWorker.controller.postMessage({
+      type:"SKIP_WAITING"
+    });
+
+  }
+
+  setTimeout(() => {
+    window.location.reload();
+  },300);
+
+}
