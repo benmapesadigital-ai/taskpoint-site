@@ -138,63 +138,97 @@ $('#menuBtn').onclick=()=>$('#drawer').classList.add('open');$('#drawerClose').o
 const cm=$('#certModal'),cv=$('#certViewer');$$('[data-cert]').forEach(b=>b.onclick=()=>{cv.src=b.dataset.cert;cm.classList.add('show')});$('#certModalClose').onclick=()=>cm.classList.remove('show');cm.addEventListener('click',e=>{if(e.target===cm)cm.classList.remove('show')});$('#heroVideo')?.play?.().catch?.(()=>{});
 
 /* =========================================================
-   TASKPOINT PRO — APP INSTALL + UPDATE SYSTEM
+   TASKPOINT PRO — APP INSTALL SYSTEM
    ========================================================= */
 
 let deferredInstallPrompt = null;
+let installPromptReady = null;
 
-/* Android / Chrome install prompt */
 window.addEventListener("beforeinstallprompt", (event) => {
+
   event.preventDefault();
+
   deferredInstallPrompt = event;
 
-  document.querySelectorAll('[data-app-install]').forEach(btn => {
-    btn.style.display = "";
-  });
+  if (installPromptReady) {
+    installPromptReady.resolve(event);
+    installPromptReady = null;
+  }
+
 });
 
+function waitForInstallPrompt(timeout = 2500) {
 
-async function installTaskPointApp(){
+  if (deferredInstallPrompt) {
+    return Promise.resolve(deferredInstallPrompt);
+  }
 
-  /* Already running as installed app */
+  return new Promise((resolve) => {
+
+    installPromptReady = {
+      resolve: resolve
+    };
+
+    setTimeout(() => {
+
+      if (installPromptReady) {
+        installPromptReady = null;
+        resolve(null);
+      }
+
+    }, timeout);
+
+  });
+
+}
+
+async function installTaskPointApp() {
+
+  /* Kama tayari ipo kwenye App */
   if (
     window.matchMedia("(display-mode: standalone)").matches ||
     window.navigator.standalone === true
-  ){
+  ) {
+
     showAppMessage(
       "TASKPOINT PRO APP",
       "App tayari imewekwa kwenye simu yako. ✅"
     );
+
     return;
   }
 
-  /* Browser supports install prompt */
-  if (deferredInstallPrompt){
+  /* Subiri install prompt ikiwa bado haijafika */
+  const promptEvent = await waitForInstallPrompt();
 
-    deferredInstallPrompt.prompt();
+  if (promptEvent) {
 
-    const result = await deferredInstallPrompt.userChoice;
+    promptEvent.prompt();
 
-    if(result.outcome === "accepted"){
+    const result = await promptEvent.userChoice;
+
+    if (result.outcome === "accepted") {
+
       deferredInstallPrompt = null;
+
     }
 
     return;
   }
 
-  /* Installation not available yet */
+  /* Ikiwa browser hairuhusu install */
   showAppMessage(
     "PAKUA APP",
     "Fungua TaskPointPro.com kwa Chrome kisha bonyeza PAKUA APP."
   );
+
 }
 
-
-/* App message */
-function showAppMessage(title, message){
+function showAppMessage(title, message) {
 
   const old = document.getElementById("tpAppMessage");
-  if(old) old.remove();
+
+  if (old) old.remove();
 
   const box = document.createElement("div");
 
@@ -202,15 +236,23 @@ function showAppMessage(title, message){
 
   box.innerHTML = `
     <div class="tp-app-message-box">
-      <button class="tp-app-message-close" onclick="this.parentElement.parentElement.remove()">×</button>
+
+      <button
+        class="tp-app-message-close"
+        onclick="this.parentElement.parentElement.remove()">
+        ×
+      </button>
+
       <b>${title}</b>
+
       <span>${message}</span>
+
     </div>
   `;
 
   document.body.appendChild(box);
-}
 
+}
 
 /* Connect Pakua App buttons */
 document.addEventListener("click", (event) => {
