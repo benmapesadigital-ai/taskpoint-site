@@ -362,6 +362,42 @@ if ("serviceWorker" in navigator) {
   });
 }
   </script>
-  
+
+  <!-- TASKPOINT PRO SMS WIDGET -->
+<div class="tp-sms-float" id="tpSmsFloat">
+  <button type="button" class="tp-sms-float-btn" id="tpSmsOpen">
+    <span class="tp-sms-float-icon">💬</span>
+    <span class="tp-sms-float-text">TUMA UJUMBE<br><small>WA KAWAIDA</small></span>
+  </button>
+</div>
+
+<div class="tp-sms-overlay" id="tpSmsOverlay">
+  <div class="tp-sms-modal" role="dialog" aria-modal="true" aria-labelledby="tpSmsTitle">
+    <button type="button" class="tp-sms-close" id="tpSmsClose" aria-label="Funga">×</button>
+
+    <div class="tp-sms-head">
+      <div class="tp-sms-icon">💬</div>
+      <div>
+        <h3 id="tpSmsTitle">TUMA UJUMBE</h3>
+        <p>Andika ujumbe wako hapa chini</p>
+      </div>
+    </div>
+
+    <textarea
+      id="tpSmsMessage"
+      maxlength="500"
+      placeholder="Andika ujumbe wako hapa..."
+    ></textarea>
+
+    <div class="tp-sms-counter">
+      <span>Ujumbe wa SMS</span>
+      <span><b id="tpSmsCount">0</b>/500</span>
+    </div>
+
+    <button type="button" class="tp-sms-send" id="tpSmsSend">
+      TUMA UJUMBE ➤
+    </button>
+  </div>
+</div>
 </body>
 </html>
