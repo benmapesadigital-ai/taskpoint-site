@@ -8,7 +8,37 @@ const STOCK=[
 [7821861,'Smartphone'],[7191504,'Laptop'],[5450247,'Pikipiki Showroom'],[30225108,'Luxury Car'],[36124120,'Smart Watch'],[8005482,'Headphones'],[8005481,'Headphones Pro'],[8005470,'Wireless Headphones'],[8005851,'Headset'],[35315351,'Smartphone Demo'],[31685249,'Laptops Tech Store'],[8551507,'Gaming Controller'],[19897022,'Printer'],[31526595,'Office Printer'],[2849945,'Coffee Machine'],[1194719,'Espresso Machine'],[6913276,'Digital Tablet'],[5498986,'Washing Machine'],[7579947,'Tablet Business'],[7579661,'Tablet Office'],[7082853,'Tablet Lifestyle'],[7195750,'Tablet Browsing'],[31183721,'Gaming Mouse'],[8888529,'Vintage Keyboard'],[7534239,'Backlit Keyboard'],[7534238,'Tech Keyboard'],[7534236,'RGB Keyboard'],[7652817,'Digital Tablet Pro'],[7308234,'E-commerce Tablet'],[4962316,'Computer Set'],[25189787,'Computer Mouse'],[33974735,'Mouse Close-up'],[11999581,'Television'],[28436813,'Bicycle Shop'],[5450250,'Motorcycle Deal'],[5450253,'Motorcycle Purchase'],[5450248,'Motorcycle Selection'],[5450249,'Motorcycle Showroom'],[5450246,'Motorbike Display'],[7774568,'Gaming Controller Pro'],[6374206,'Smartphone Display']
 ].map(([id,title])=>({id,title,video:`https://www.pexels.com/download/video/${id}/`}));
 const PRODUCTS=[['Smartphone','📱'],['Laptop','💻'],['Pikipiki','🏍️'],['Gari','🚗'],['Smart Watch','⌚'],['Headphones','🎧'],['Headphones Pro','🎧'],['Wireless Headphones','🎧'],['Headset','🎧'],['Smartphone Pro','📱'],['Laptop Store','💻'],['Gaming Controller','🎮'],['Printer','🖨️'],['Office Printer','🖨️'],['Coffee Machine','☕'],['Espresso Machine','☕'],['Tablet','📱'],['Washing Machine','🧺'],['Business Tablet','📱'],['Office Tablet','📱'],['Tablet Lifestyle','📱'],['Tablet Browsing','📱'],['Gaming Mouse','🖱️'],['Keyboard','⌨️'],['Backlit Keyboard','⌨️'],['Tech Keyboard','⌨️'],['RGB Keyboard','⌨️'],['Digital Tablet','📱'],['E-commerce Tablet','📱'],['Computer Set','🖥️'],['Computer Mouse','🖱️'],['Mouse Close-up','🖱️'],['Television','📺'],['Bicycle','🚲'],['Motorcycle Deal','🏍️'],['Motorcycle Purchase','🏍️'],['Motorcycle Selection','🏍️'],['Motorcycle Showroom','🏍️'],['Gaming Controller Pro','🎮'],['Smartphone Display','📱'],['Laptop Pro','💻'],['Car Showroom','🚘'],['Electric Scooter','🛵'],['Tablet Pro','📲'],['Camera','📷'],['Speaker','🔊'],['Monitor','🖥️'],['Air Conditioner','❄️'],['Fridge','🧊'],['Microwave','♨️'],['Keyboard Pro','⌨️'],['Mouse Pro','🖱️'],['Phone Accessories','📱'],['Car Accessories','🚗'],['Motorbike Accessories','🏍️'],['Smart TV','📺'],['Printer Pro','🖨️'],['Game Console','🎮'],['Earbuds','🎧'],['Power Bank','🔋']];
-const COMMUNITY=[['AM','Asha M.','🇹🇿 Tanzania','Mfumo ni rahisi kutumia na task zinaeleweka vizuri.'],['DK','Daniel K.','🇹🇿 Tanzania','Napenda jinsi task zinavyopangwa; ni rahisi kufuata.'],['MR','Michael R.','🌍 International','The platform is clean, simple and easy to navigate.'],['NJ','Neema J.','🇹🇿 Tanzania','Nimependa muonekano na namna task zinavyofunguka.'],['JW','James W.','🌍 International','Everything is clearly presented and easy to understand.'],['RP','Rehema P.','🇹🇿 Tanzania','Kwa mtu anayeanza, mfumo ni rahisi sana kufuata.']];
+const COMMUNITY=[['AM','Asha M.','🇹🇿 Tanzania','Mfumo ni rahisi kutumia na task zinaeleweka vizuri.'],
+['DK','Daniel K.','🇹🇿 Tanzania','Napenda jinsi task zinavyopangwa; ni rahisi kufuata.'],
+['MR','Michael R.','🌍 International','The platform is clean, simple and easy to navigate.'],
+['NJ','Neema J.','🇹🇿 Tanzania','Nimependa muonekano na namna task zinavyofunguka.'],
+['JW','James W.','🌍 International','Everything is clearly presented and easy to understand.'],
+['RP','Rehema P.','🇹🇿 Tanzania','Kwa mtu anayeanza, mfumo ni rahisi sana kufuata.'],
+['FA','Fatma A.','🇹🇿 Tanzania','Maelekezo ya task yanaonekana wazi na rahisi kuelewa.'],
+['JM','Juma M.','🇹🇿 Tanzania','Nimependa jinsi mfumo ulivyo rahisi kutumia kwenye simu.'],
+['HA','Halima S.','🇹🇿 Tanzania','Muonekano wa website ni mzuri na navigation ni rahisi.'],
+['BA','Baraka P.','🇹🇿 Tanzania','Nimeweza kuelewa hatua za kutumia mfumo bila shida.'],
+['GE','George M.','🇹🇿 Tanzania','Mfumo unaonekana vizuri na maelekezo yako wazi.'],
+['SA','Salma K.','🇹🇿 Tanzania','Nimependa urahisi wa kutumia TaskPoint Pro kwenye simu.'],
+['IB','Ibrahim A.','🇹🇿 Tanzania','Website iko simple na ni rahisi kufuata hatua.'],
+['JO','Joyce P.','🇹🇿 Tanzania','Task zinaeleweka vizuri na mfumo una navigation nzuri.'],
+['AG','Agnes J.','🇹🇿 Tanzania','Nimependa mpangilio wa mfumo na jinsi taarifa zinavyoonekana.'],
+['YO','Yusuf M.','🇹🇿 Tanzania','Ni rahisi kujifunza namna ya kutumia mfumo.'],
+['PR','Prisca N.','🇹🇿 Tanzania','Muonekano ni mzuri na taarifa muhimu zinaonekana wazi.'],
+['EM','Emmanuel K.','🇹🇿 Tanzania','Nimependa mfumo kwa sababu maelekezo yake ni rahisi kuelewa.'],
+['JA','Janeth S.','🇹🇿 Tanzania','TaskPoint Pro inaonekana professional na rahisi kutumia.'],
+['MO','Moses R.','🇹🇿 Tanzania','Nimependa namna task zinavyoonyeshwa kwenye simu.'],
+['HE','Hellen A.','🇹🇿 Tanzania','Mfumo ni mwepesi kufuatilia na maelekezo yako wazi.'],
+['AB','Abdallah J.','🇹🇿 Tanzania','Nimefurahia urahisi wa navigation kwenye website.'],
+['JO','Joseph P.','🇹🇿 Tanzania','Kila kitu muhimu kinaonekana vizuri kwenye ukurasa.'],
+['ME','Mercy A.','🇹🇿 Tanzania','Nimependa design na namna information ilivyopangwa.'],
+['SO','Sophia M.','🌍 International','The interface is simple and easy to understand.'],
+['HA','Hassan K.','🇹🇿 Tanzania','Mfumo unaeleweka vizuri hata kwa mtu anayeanza.'],
+['GR','Grace N.','🇹🇿 Tanzania','Nimependa jinsi website ilivyo rahisi kutumia.'],
+['PE','Peter J.','🇹🇿 Tanzania','Maelekezo yako wazi na task zinaonekana vizuri.'],
+['MA','Mary S.','🇹🇿 Tanzania','Muonekano wa mfumo ni mzuri na unaeleweka haraka.'],
+['SA','Samuel K.','🇹🇿 Tanzania','Nimependa mpangilio wa task na taarifa zake.']
+];];
 const DEMO_NOTIFICATIONS=[
 ['Amina','100,000'],['John','120,000'],['Neema','200,000'],['Brian','100,000'],
 ['Zawadi','120,000'],['David','200,000'],['Rehema','100,000'],['Michael','120,000'],
