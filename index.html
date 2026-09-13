@@ -399,5 +399,68 @@ if ("serviceWorker" in navigator) {
     </button>
   </div>
 </div>
+
+  <script>
+(function () {
+  function setupSMS() {
+    const openBtn = document.getElementById('tpSmsOpen');
+    const closeBtn = document.getElementById('tpSmsClose');
+    const overlay = document.getElementById('tpSmsOverlay');
+    const messageBox = document.getElementById('tpSmsMessage');
+    const sendBtn = document.getElementById('tpSmsSend');
+    const count = document.getElementById('tpSmsCount');
+
+    if (!openBtn || !closeBtn || !overlay || !messageBox || !sendBtn) {
+      return;
+    }
+
+    openBtn.onclick = function () {
+      overlay.classList.add('is-open');
+      setTimeout(function () {
+        messageBox.focus();
+      }, 100);
+    };
+
+    closeBtn.onclick = function () {
+      overlay.classList.remove('is-open');
+    };
+
+    overlay.onclick = function (event) {
+      if (event.target === overlay) {
+        overlay.classList.remove('is-open');
+      }
+    };
+
+    messageBox.oninput = function () {
+      if (count) {
+        count.textContent = messageBox.value.length;
+      }
+    };
+
+    sendBtn.onclick = function () {
+      const message = messageBox.value.trim();
+
+      if (!message) {
+        alert('Tafadhali andika ujumbe wako kwanza.');
+        messageBox.focus();
+        return;
+      }
+
+      const number = '0764540225';
+
+      const smsLink =
+        'sms:' + number + '?body=' + encodeURIComponent(message);
+
+      window.location.href = smsLink;
+    };
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupSMS);
+  } else {
+    setupSMS();
+  }
+})();
+        </script>
 </body>
 </html>
