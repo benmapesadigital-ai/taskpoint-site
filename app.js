@@ -477,3 +477,78 @@ if ("serviceWorker" in navigator) {
   );
 
     }
+/* =========================================================
+   TASKPOINT PRO — SMS MESSAGE SYSTEM
+   ========================================================= */
+
+(function(){
+  function initTaskPointSMS(){
+    const openBtn = document.getElementById('tpSmsOpen');
+    const closeBtn = document.getElementById('tpSmsClose');
+    const overlay = document.getElementById('tpSmsOverlay');
+    const messageBox = document.getElementById('tpSmsMessage');
+    const sendBtn = document.getElementById('tpSmsSend');
+    const count = document.getElementById('tpSmsCount');
+
+    if(!openBtn || !closeBtn || !overlay || !messageBox || !sendBtn) return;
+
+    function openSMS(){
+      overlay.classList.add('is-open');
+
+      setTimeout(() => {
+        messageBox.focus();
+      }, 120);
+    }
+
+    function closeSMS(){
+      overlay.classList.remove('is-open');
+    }
+
+    openBtn.addEventListener('click', openSMS);
+    closeBtn.addEventListener('click', closeSMS);
+
+    overlay.addEventListener('click', function(e){
+      if(e.target === overlay) closeSMS();
+    });
+
+    messageBox.addEventListener('input', function(){
+      if(count){
+        count.textContent = messageBox.value.length;
+      }
+    });
+
+    sendBtn.addEventListener('click', function(){
+      const message = messageBox.value.trim();
+
+      if(!message){
+        messageBox.focus();
+        messageBox.setCustomValidity('Tafadhali andika ujumbe wako kwanza.');
+        messageBox.reportValidity();
+        messageBox.setCustomValidity('');
+        return;
+      }
+
+      const smsNumber =
+        (typeof CONFIG !== 'undefined' && CONFIG.smsNumber)
+          ? CONFIG.smsNumber
+          : '0764540225';
+
+      const smsUrl =
+        'sms:' + smsNumber + '?body=' + encodeURIComponent(message);
+
+      window.location.href = smsUrl;
+    });
+
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape' && overlay.classList.contains('is-open')){
+        closeSMS();
+      }
+    });
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', initTaskPointSMS);
+  }else{
+    initTaskPointSMS();
+  }
+})();
