@@ -1387,3 +1387,210 @@ body{
     transform:translateY(0);
   }
 }
+
+/* =========================================================
+   TASKPOINT PRO — FLOATING SMS BUTTON
+   ========================================================= */
+
+.tp-sms-float{
+  position:fixed;
+  right:0;
+  top:50%;
+  transform:translateY(-50%);
+  z-index:9990;
+}
+
+.tp-sms-float-btn{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:12px 10px 12px 9px;
+  border:1px solid rgba(255,255,255,.18);
+  border-right:0;
+  border-radius:16px 0 0 16px;
+  background:linear-gradient(135deg,#16d96f,#0dbb5b);
+  color:#07111f;
+  box-shadow:0 8px 28px rgba(0,0,0,.30);
+  cursor:pointer;
+  font-family:inherit;
+  font-weight:900;
+}
+
+.tp-sms-float-btn:active{
+  transform:scale(.96);
+}
+
+.tp-sms-float-icon{
+  font-size:21px;
+  line-height:1;
+}
+
+.tp-sms-float-text{
+  font-size:10px;
+  line-height:1.15;
+  text-align:left;
+  letter-spacing:.3px;
+}
+
+.tp-sms-float-text small{
+  font-size:8px;
+  font-weight:900;
+}
+
+/* SMS OVERLAY */
+.tp-sms-overlay{
+  position:fixed;
+  inset:0;
+  z-index:10000;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  background:rgba(0,0,0,.68);
+  backdrop-filter:blur(5px);
+}
+
+.tp-sms-overlay.is-open{
+  display:flex;
+}
+
+.tp-sms-modal{
+  position:relative;
+  width:min(100%,430px);
+  padding:22px;
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:22px;
+  background:#10182b;
+  color:#fff;
+  box-shadow:0 20px 60px rgba(0,0,0,.45);
+}
+
+.tp-sms-close{
+  position:absolute;
+  top:10px;
+  right:12px;
+  width:34px;
+  height:34px;
+  border:0;
+  border-radius:50%;
+  background:rgba(255,255,255,.08);
+  color:#fff;
+  font-size:25px;
+  line-height:1;
+  cursor:pointer;
+}
+
+.tp-sms-head{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding-right:35px;
+  margin-bottom:18px;
+}
+
+.tp-sms-icon{
+  width:48px;
+  height:48px;
+  display:grid;
+  place-items:center;
+  border-radius:14px;
+  background:rgba(22,217,111,.14);
+  font-size:25px;
+}
+
+.tp-sms-head h3{
+  margin:0;
+  color:#fff;
+  font-size:19px;
+  font-weight:900;
+}
+
+.tp-sms-head p{
+  margin:4px 0 0;
+  color:#aeb9cf;
+  font-size:12px;
+}
+
+#tpSmsMessage{
+  width:100%;
+  min-height:145px;
+  box-sizing:border-box;
+  resize:vertical;
+  padding:14px;
+  border:1px solid #2d3b66;
+  border-radius:14px;
+  outline:none;
+  background:#07111f;
+  color:#fff;
+  font-family:inherit;
+  font-size:14px;
+  line-height:1.5;
+}
+
+#tpSmsMessage:focus{
+  border-color:#16d96f;
+  box-shadow:0 0 0 3px rgba(22,217,111,.10);
+}
+
+#tpSmsMessage::placeholder{
+  color:#71809e;
+}
+
+.tp-sms-counter{
+  display:flex;
+  justify-content:space-between;
+  margin:8px 2px 14px;
+  color:#8290aa;
+  font-size:10px;
+}
+
+.tp-sms-counter b{
+  color:#16d96f;
+}
+
+.tp-sms-send{
+  width:100%;
+  min-height:48px;
+  border:0;
+  border-radius:13px;
+  background:#16d96f;
+  color:#07111f;
+  font-family:inherit;
+  font-size:13px;
+  font-weight:900;
+  cursor:pointer;
+  box-shadow:0 8px 20px rgba(22,217,111,.18);
+}
+
+.tp-sms-send:active{
+  transform:scale(.98);
+}
+
+/* MOBILE */
+@media(max-width:600px){
+  .tp-sms-float{
+    top:52%;
+  }
+
+  .tp-sms-float-btn{
+    padding:11px 8px;
+    border-radius:14px 0 0 14px;
+  }
+
+  .tp-sms-float-icon{
+    font-size:19px;
+  }
+
+  .tp-sms-float-text{
+    font-size:9px;
+  }
+
+  .tp-sms-float-text small{
+    font-size:7px;
+  }
+
+  .tp-sms-modal{
+    padding:19px;
+    border-radius:20px;
+  }
+}
