@@ -9,7 +9,31 @@ const STOCK=[
 ].map(([id,title])=>({id,title,video:`https://www.pexels.com/download/video/${id}/`}));
 const PRODUCTS=[['Smartphone','📱'],['Laptop','💻'],['Pikipiki','🏍️'],['Gari','🚗'],['Smart Watch','⌚'],['Headphones','🎧'],['Headphones Pro','🎧'],['Wireless Headphones','🎧'],['Headset','🎧'],['Smartphone Pro','📱'],['Laptop Store','💻'],['Gaming Controller','🎮'],['Printer','🖨️'],['Office Printer','🖨️'],['Coffee Machine','☕'],['Espresso Machine','☕'],['Tablet','📱'],['Washing Machine','🧺'],['Business Tablet','📱'],['Office Tablet','📱'],['Tablet Lifestyle','📱'],['Tablet Browsing','📱'],['Gaming Mouse','🖱️'],['Keyboard','⌨️'],['Backlit Keyboard','⌨️'],['Tech Keyboard','⌨️'],['RGB Keyboard','⌨️'],['Digital Tablet','📱'],['E-commerce Tablet','📱'],['Computer Set','🖥️'],['Computer Mouse','🖱️'],['Mouse Close-up','🖱️'],['Television','📺'],['Bicycle','🚲'],['Motorcycle Deal','🏍️'],['Motorcycle Purchase','🏍️'],['Motorcycle Selection','🏍️'],['Motorcycle Showroom','🏍️'],['Gaming Controller Pro','🎮'],['Smartphone Display','📱'],['Laptop Pro','💻'],['Car Showroom','🚘'],['Electric Scooter','🛵'],['Tablet Pro','📲'],['Camera','📷'],['Speaker','🔊'],['Monitor','🖥️'],['Air Conditioner','❄️'],['Fridge','🧊'],['Microwave','♨️'],['Keyboard Pro','⌨️'],['Mouse Pro','🖱️'],['Phone Accessories','📱'],['Car Accessories','🚗'],['Motorbike Accessories','🏍️'],['Smart TV','📺'],['Printer Pro','🖨️'],['Game Console','🎮'],['Earbuds','🎧'],['Power Bank','🔋']];
 const COMMUNITY=[['AM','Asha M.','🇹🇿 Tanzania','Mfumo ni rahisi kutumia na task zinaeleweka vizuri.'],['DK','Daniel K.','🇹🇿 Tanzania','Napenda jinsi task zinavyopangwa; ni rahisi kufuata.'],['MR','Michael R.','🌍 International','The platform is clean, simple and easy to navigate.'],['NJ','Neema J.','🇹🇿 Tanzania','Nimependa muonekano na namna task zinavyofunguka.'],['JW','James W.','🌍 International','Everything is clearly presented and easy to understand.'],['RP','Rehema P.','🇹🇿 Tanzania','Kwa mtu anayeanza, mfumo ni rahisi sana kufuata.']];
-const DEMO_NOTIFICATIONS=[['Amina','100,000'],['John','120,000'],['Neema','200,000'],['Brian','100,000'],['Zawadi','120,000'],['David','200,000'],['Rehema','100,000'],['Michael','120,000'],['Esther','200,000'],['Kelvin','100,000'],['Asha','120,000'],['Daniel','200,000'],['Grace','100,000'],['Peter','120,000'],['Mercy','200,000'],['Joseph','100,000'],['Sophia','120,000'],['Hassan','200,000'],['Mary','100,000'],['Samuel','120,000']];
+const DEMO_NOTIFICATIONS=[
+['Amina','100,000'],['John','120,000'],['Neema','200,000'],['Brian','100,000'],
+['Zawadi','120,000'],['David','200,000'],['Rehema','100,000'],['Michael','120,000'],
+['Esther','200,000'],['Kelvin','100,000'],['Asha','120,000'],['Daniel','200,000'],
+['Grace','100,000'],['Peter','120,000'],['Mercy','200,000'],['Joseph','100,000'],
+['Sophia','120,000'],['Hassan','200,000'],['Mary','100,000'],['Samuel','120,000'],
+['Halima','200,000'],['Ibrahim','100,000'],['Fatma','120,000'],['Juma','200,000'],
+['Salma','100,000'],['Moses','120,000'],['Agnes','200,000'],['Emmanuel','100,000'],
+['Joyce','120,000'],['Abdallah','200,000'],['Prisca','100,000'],['George','120,000'],
+['Janeth','200,000'],['Baraka','100,000'],['Hellen','120,000'],['Yusuf','200,000']
+];
+
+function dailyShuffle(items){
+  const seed=Number(tzDateISO().replace(/-/g,''));
+  const arr=[...items];
+  let x=seed;
+  for(let i=arr.length-1;i>0;i--){
+    x=(x*9301+49297)%233280;
+    const j=x%(i+1);
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+  return arr;
+}
+
+const TODAY_NOTIFICATIONS=dailyShuffle(DEMO_NOTIFICATIONS);
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)],money=n=>new Intl.NumberFormat('sw-TZ').format(n);
 $$('[data-link="registration"]').forEach(a=>a.href=CONFIG.registrationUrl);$$('[data-link="whatsapp"]').forEach(a=>a.href=CONFIG.whatsappUrl);$$('[data-link="channel"]').forEach(a=>a.href=CONFIG.channelUrl);$('#phoneText').textContent=CONFIG.phoneDisplay;$('#emailText').textContent=CONFIG.email;$('#activationFee').textContent=money(CONFIG.activationFee);$('#activationBonus').textContent=money(CONFIG.activationBonus);
 function tzDateISO(){const p=new Intl.DateTimeFormat('en-CA',{timeZone:'Africa/Dar_es_Salaam',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());const o=Object.fromEntries(p.map(x=>[x.type,x.value]));return `${o.year}-${o.month}-${o.day}`}
@@ -132,7 +156,7 @@ $('#withdrawSubmit').onclick=()=>{
 
 let audio;function notificationSound(index=0){try{audio||=new(window.AudioContext||window.webkitAudioContext)();if(audio.state==='suspended')audio.resume();const now=audio.currentTime;const freqs=[660,880,1047,740,988];const f=freqs[index%freqs.length];const o=audio.createOscillator(),g=audio.createGain();o.type='sine';o.frequency.setValueAtTime(f,now);o.frequency.exponentialRampToValueAtTime(f*1.35,now+.10);g.gain.setValueAtTime(.0001,now);g.gain.exponentialRampToValueAtTime(.055,now+.025);g.gain.exponentialRampToValueAtTime(.0001,now+.32);o.connect(g);g.connect(audio.destination);o.start(now);o.stop(now+.34)}catch(_){} }
 // Demo notifications are clearly marked as demo data. Replace with verified backend records before production.
-const stack=$('#toastStack');let ni=0;const toastClasses=['toast-violet','toast-cyan','toast-orange','toast-pink','toast-green'];function showNotification(){const index=ni++%DEMO_NOTIFICATIONS.length;const [name,amt]=DEMO_NOTIFICATIONS[index];const t=document.createElement('div');t.className=`evidence-toast ${toastClasses[index%toastClasses.length]}`;t.innerHTML=`<div class="toast-head"><b>TAARIFA MPYA</b><span class="toast-time">6s</span></div><span>${name} — Nimelipwa Tsh ${amt}/=</span><small>Pesa Zinatoka Muda Wote; ni malipo halali.</small><div class="toast-progress"><i></i></div>`;stack.appendChild(t);notificationSound(index);let left=6;const tick=setInterval(()=>{left--;const el=t.querySelector('.toast-time');if(el)el.textContent=`${Math.max(left,0)}s`;if(left<=0)clearInterval(tick)},1000);setTimeout(()=>{clearInterval(tick);t.remove();showNotification()},6000)}setTimeout(showNotification,2200);
+const stack=$('#toastStack');let ni=0;const toastClasses=['toast-violet','toast-cyan','toast-orange','toast-pink','toast-green'];function showNotification(){const index=ni++%TODAY_NOTIFICATIONS.length;const [name,amt]=TODAY_NOTIFICATIONS[index];const t=document.createElement('div');t.className=`evidence-toast ${toastClasses[index%toastClasses.length]}`;t.innerHTML=`<div class="toast-head"><b>TAARIFA MPYA</b><span class="toast-time">6s</span></div><span>${name} — Nimelipwa Tsh ${amt}/=</span><small>Pesa Zinatoka Muda Wote; ni malipo halali.</small><div class="toast-progress"><i></i></div>`;stack.appendChild(t);notificationSound(index);let left=6;const tick=setInterval(()=>{left--;const el=t.querySelector('.toast-time');if(el)el.textContent=`${Math.max(left,0)}s`;if(left<=0)clearInterval(tick)},1000);setTimeout(()=>{clearInterval(tick);t.remove();showNotification()},6000)}setTimeout(showNotification,2200);
 const tg=$('#testimonialGrid');COMMUNITY.forEach((t,i)=>{const e=document.createElement('article');e.className='testimonial';e.innerHTML=`<div class="person"><div class="avatar avatar-${i%4}" aria-hidden="true">${t[0]}</div><div><b>${t[1]}</b><span class="country">${t[2]}</span><div class="stars" aria-label="5 stars">★★★★★</div></div></div><p>“${t[3]}”</p>`;tg.appendChild(e)});
 $('#menuBtn').onclick=()=>$('#drawer').classList.add('open');$('#drawerClose').onclick=()=>$('#drawer').classList.remove('open');$$('.drawer a').forEach(a=>a.onclick=()=>$('#drawer').classList.remove('open'));
 const cm=$('#certModal'),cv=$('#certViewer');$$('[data-cert]').forEach(b=>b.onclick=()=>{cv.src=b.dataset.cert;cm.classList.add('show')});$('#certModalClose').onclick=()=>cm.classList.remove('show');cm.addEventListener('click',e=>{if(e.target===cm)cm.classList.remove('show')});$('#heroVideo')?.play?.().catch?.(()=>{});
