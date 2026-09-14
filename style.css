@@ -1594,3 +1594,239 @@ body{
     border-radius:20px;
   }
 }
+
+/* =========================================================
+   TASKPOINT PRO — PREMIUM SPARKLE EFFECT
+   Nyota zinazozunguka action cards
+   ========================================================= */
+
+.nav-actions .action-card{
+  position:relative;
+  isolation:isolate;
+  overflow:visible !important;
+}
+
+/* Nyota */
+.nav-actions .action-card::before,
+.nav-actions .action-card::after{
+  content:"✦";
+  position:absolute;
+  z-index:20;
+  pointer-events:none;
+
+  color:#fff7a8;
+  font-size:13px;
+  line-height:1;
+
+  text-shadow:
+    0 0 5px currentColor,
+    0 0 10px currentColor,
+    0 0 18px currentColor;
+
+  animation:tpSparkleOrbit 5s linear infinite;
+}
+
+/* Nyota ya kwanza */
+.nav-actions .action-card::before{
+  animation-delay:0s;
+}
+
+/* Nyota ya pili */
+.nav-actions .action-card::after{
+  content:"✧";
+  color:#7fffd4;
+  font-size:10px;
+  animation-delay:-2.5s;
+}
+
+/* Mzunguko kuzunguka card */
+@keyframes tpSparkleOrbit{
+
+  0%{
+    left:8%;
+    top:-8px;
+    opacity:0;
+    transform:scale(.55) rotate(0deg);
+  }
+
+  8%{
+    opacity:1;
+  }
+
+  25%{
+    left:92%;
+    top:-8px;
+    opacity:1;
+    transform:scale(1) rotate(90deg);
+  }
+
+  50%{
+    left:calc(100% + 5px);
+    top:calc(100% - 5px);
+    opacity:1;
+    transform:scale(.8) rotate(180deg);
+  }
+
+  75%{
+    left:8%;
+    top:calc(100% - 5px);
+    opacity:1;
+    transform:scale(1) rotate(270deg);
+  }
+
+  92%{
+    opacity:1;
+  }
+
+  100%{
+    left:8%;
+    top:-8px;
+    opacity:0;
+    transform:scale(.55) rotate(360deg);
+  }
+}
+
+/* Inakuwa energetic kidogo ukigusa card */
+.nav-actions .action-card:hover::before,
+.nav-actions .action-card:hover::after{
+  animation-duration:3.2s;
+}
+
+/* Mobile — nyota ziwe ndogo na smart */
+@media(max-width:760px){
+
+  .nav-actions .action-card::before{
+    font-size:11px;
+  }
+
+  .nav-actions .action-card::after{
+    font-size:8px;
+  }
+}
+
+/* Kama mtumiaji amezima animations kwenye simu/PC */
+@media(prefers-reduced-motion:reduce){
+
+  .nav-actions .action-card::before,
+  .nav-actions .action-card::after{
+    animation:none;
+    opacity:.9;
+  }
+}
+
+/* =========================================================
+   TASKPOINT PRO — SMS BUTTON SPARKLE
+   TUMA UJUMBE / WA KAWAIDA
+   ========================================================= */
+
+.tp-sms-float-btn{
+  position:relative;
+  isolation:isolate;
+  overflow:visible !important;
+}
+
+/* Nyota zinazozunguka SMS button */
+.tp-sms-float-btn::before,
+.tp-sms-float-btn::after{
+  content:"✦";
+  position:absolute;
+  z-index:20;
+  pointer-events:none;
+
+  color:#fff7a8;
+  font-size:13px;
+  line-height:1;
+
+  text-shadow:
+    0 0 5px currentColor,
+    0 0 10px currentColor,
+    0 0 18px currentColor;
+
+  animation:tpSmsSparkleOrbit 4.8s linear infinite;
+}
+
+.tp-sms-float-btn::before{
+  animation-delay:0s;
+}
+
+.tp-sms-float-btn::after{
+  content:"✧";
+  color:#7fffd4;
+  font-size:10px;
+  animation-delay:-2.4s;
+}
+
+/* Mzunguko wa nyota kuzunguka TUMA UJUMBE */
+@keyframes tpSmsSparkleOrbit{
+
+  0%{
+    left:8%;
+    top:-9px;
+    opacity:0;
+    transform:scale(.55) rotate(0deg);
+  }
+
+  8%{
+    opacity:1;
+  }
+
+  25%{
+    left:92%;
+    top:-9px;
+    opacity:1;
+    transform:scale(1) rotate(90deg);
+  }
+
+  50%{
+    left:calc(100% + 5px);
+    top:calc(100% - 5px);
+    opacity:1;
+    transform:scale(.8) rotate(180deg);
+  }
+
+  75%{
+    left:8%;
+    top:calc(100% - 5px);
+    opacity:1;
+    transform:scale(1) rotate(270deg);
+  }
+
+  92%{
+    opacity:1;
+  }
+
+  100%{
+    left:8%;
+    top:-9px;
+    opacity:0;
+    transform:scale(.55) rotate(360deg);
+  }
+}
+
+/* Ukigusa button, nyota ziende haraka kidogo */
+.tp-sms-float-btn:hover::before,
+.tp-sms-float-btn:hover::after{
+  animation-duration:3s;
+}
+
+/* Mobile */
+@media(max-width:760px){
+
+  .tp-sms-float-btn::before{
+    font-size:11px;
+  }
+
+  .tp-sms-float-btn::after{
+    font-size:8px;
+  }
+}
+
+/* Reduced motion */
+@media(prefers-reduced-motion:reduce){
+
+  .tp-sms-float-btn::before,
+  .tp-sms-float-btn::after{
+    animation:none;
+    opacity:.9;
+  }
+}
