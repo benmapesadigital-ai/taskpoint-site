@@ -1093,32 +1093,75 @@ function showPayoutForm(){
 
   const phoneInput=$('#withdrawPhoneV2');
 
-  $('#withdrawFinalBtn').onclick=()=>{
+$('#withdrawFinalBtn').onclick=()=>{
 
-    const phone=phoneInput.value.trim();
+  const phone=phoneInput.value.trim();
 
-    if(!/^0\d{9}$/.test(phone)){
+  if(!/^0\d{9}$/.test(phone)){
 
-      $('#withdrawV2Status').textContent=
-        '⚠️ Weka namba sahihi ya simu yenye tarakimu 10, mfano 07XXXXXXXX.';
+    $('#withdrawV2Status').textContent=
+      '⚠️ Weka namba sahihi ya simu yenye tarakimu 10, mfano 07XXXXXXXX.';
 
-      return;
-    }
+    phoneInput.focus();
 
-    savePendingStatus(
-      'submitted',
-      {
-        phone,
-        submittedAt:new Date().toISOString()
-      }
-    );
+    return;
+  }
 
-    $('#withdrawV2Status').innerHTML=
-      '✅ <b>Hongera Kwa Kutoa Fedha.</b> '+
-      'Kiasi cha fedha ulichotoa kitakufikia ndani ya Dakika 1-5, Kama dakika zitapita Tuma ujumbe kawaida upate usaidizi. '+
-      'Na kama namba uliyoandika sio sahihi/umeikosea Bonyeza kitufe cha kutuma ujumbe kawaida toa taarifa mapema.';
+  const w=getWallet();
 
-  };
+  const pending=w.pendingWithdrawal;
+
+  if(!pending || !pending.amount){
+
+    $('#withdrawV2Status').textContent=
+      '⚠️ Hakuna ombi la withdrawal linalopatikana.';
+
+    return;
+  }
+
+  const amount=Number(pending.amount)||0;
+
+  const submittedAt=new Date().toISOString();
+
+
+  /* SAVE WITHDRAWAL TO HISTORY */
+
+  w.withdrawalHistory.push({
+
+    id:'WD-'+Date.now(),
+
+    amount:amount,
+
+    phone:phone,
+
+    status:'submitted',
+
+    createdAt:pending.createdAt || submittedAt,
+
+    submittedAt:submittedAt
+
+  });
+
+
+  /* CLEAR ACTIVE WITHDRAWAL */
+
+  w.pendingWithdrawal=null;
+
+
+  /* SAVE WALLET */
+
+  saveWallet(w);
+
+
+  /* SHOW FINAL POPUP */
+
+  showFinalWithdrawalPopup(
+    amount,
+    phone,
+    submittedAt
+  );
+
+};
 
 }
 
@@ -1200,8 +1243,317 @@ function showWithdrawalChoice(amount){
   };
 
 }
+/* =========================================================
+   FINAL WITHDRAWAL SUCCESS POPUP
+   ========================================================= */
 
+function showFinalWithdrawalPopup(amount,phone,submittedAt){
 
+  let popup=$('#tpFinalWithdrawalPopup');
+
+  if(!popup){
+
+    popup=document.createElement('div');
+
+    popup.id='tpFinalWithdrawalPopup';
+
+    popup.className='tp-final-withdrawal-popup';
+
+    popup.innerHTML=`
+
+      <div
+        class="tp-final-withdrawal-card"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="tpFinalWithdrawalTitle"
+      >
+
+        <button
+          type="button"
+          class="tp-final-withdrawal-close"
+          id="tpFinalWithdrawalClose"
+          aria-label="Funga"
+        >
+          ×
+        </button>
+
+        <div class="tp-final-withdrawal-success">
+          ✓
+        </div>
+
+        <h2 id="tpFinalWithdrawalTitle">
+          HONGERA! 🎉
+        </h2>
+
+        <p class="tp-final-withdrawal-main">
+          OMBI LA WITHDRAWAL LIMEPOKELEWA
+        </p>
+
+        <div class="tp-final-withdrawal-amount">
+          Tsh ${money(amount)}
+        </div>
+
+        <div class="tp-final-withdrawal-info">
+
+          <div>
+            <span>Kiasi ulicachoomba</span>
+            <strong>Tsh ${money(amount)}</strong>
+          </div>
+
+          <div>
+            <span>Namba ya kupokea</span>
+            <strong>${phone}</strong>
+          </div>
+
+        </div>
+
+        <p class="tp-final-withdrawal-note">
+          ✅ Taarifa za ombi lako zimehifadhiwa kwenye
+          <b>WITHDRAWAL HISTORY</b>.
+        </p>
+
+        <button
+          type="button"
+          class="tp-final-withdrawal-done"
+          id="tpFinalWithdrawalDone"
+        >
+          SAWA, NIMEELEWA
+        </button>
+
+      </div>
+
+    `;
+
+    document.body.appendChild(popup);
+
+    const closePopup=()=>{
+
+      popup.classList.remove('show');
+
+      popup.setAttribute(
+        'aria-hidden',
+        'true'
+      );
+
+    };
+
+    $('#tpFinalWithdrawalClose').onclick=closePopup;
+
+    $('#tpFinalWithdrawalDone').onclick=closePopup;
+
+    popup.addEventListener('click',e=>{
+
+      if(e.target===popup){
+        closePopup();
+      }
+
+    });
+
+  }
+
+  popup.classList.add('show');
+
+  popup.setAttribute(
+    'aria-hidden',
+    'false'
+  );
+
+}
+
+/* =========================================================
+   FINAL WITHDRAWAL POPUP DESIGN
+   ========================================================= */
+
+(function injectFinalWithdrawalPopupStyles(){
+
+  if(document.getElementById('tpFinalWithdrawalStyles'))
+    return;
+
+  const style=document.createElement('style');
+
+  style.id='tpFinalWithdrawalStyles';
+
+  style.textContent=`
+
+    .tp-final-withdrawal-popup{
+      position:fixed;
+      inset:0;
+      z-index:100000;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+      background:rgba(2,9,18,.78);
+      backdrop-filter:blur(8px);
+    }
+
+    .tp-final-withdrawal-popup.show{
+      display:flex;
+      animation:tpPopupFade .22s ease;
+    }
+
+    .tp-final-withdrawal-card{
+      position:relative;
+      width:min(520px,100%);
+      max-height:88vh;
+      overflow:auto;
+      padding:30px 24px 24px;
+      border-radius:26px;
+      background:#fff;
+      text-align:center;
+      box-shadow:0 35px 100px rgba(0,0,0,.45);
+      animation:tpPopupScale .25s ease;
+    }
+
+    .tp-final-withdrawal-close{
+      position:absolute;
+      top:13px;
+      right:13px;
+      width:40px;
+      height:40px;
+      border:0;
+      border-radius:50%;
+      background:#eef2f6;
+      color:#172235;
+      font-size:26px;
+      line-height:1;
+      cursor:pointer;
+    }
+
+    .tp-final-withdrawal-success{
+      width:68px;
+      height:68px;
+      margin:0 auto 14px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border-radius:50%;
+      background:#16d96f;
+      color:#062016;
+      font-size:34px;
+      font-weight:950;
+      box-shadow:0 12px 30px rgba(22,217,111,.25);
+    }
+
+    .tp-final-withdrawal-card h2{
+      margin:0;
+      color:#102033;
+      font-size:28px;
+      font-weight:950;
+    }
+
+    .tp-final-withdrawal-main{
+      margin:7px 0 16px;
+      color:#657487;
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:.5px;
+    }
+
+    .tp-final-withdrawal-amount{
+      padding:15px;
+      border-radius:16px;
+      background:linear-gradient(135deg,#071a2b,#0e2d46);
+      color:#ffd84d;
+      font-size:25px;
+      font-weight:950;
+      margin-bottom:15px;
+    }
+
+    .tp-final-withdrawal-info{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+      text-align:left;
+    }
+
+    .tp-final-withdrawal-info div{
+      padding:12px;
+      border-radius:13px;
+      background:#f5f8fb;
+      border:1px solid #e2e8ef;
+    }
+
+    .tp-final-withdrawal-info span{
+      display:block;
+      color:#718092;
+      font-size:9px;
+      font-weight:800;
+      margin-bottom:5px;
+    }
+
+    .tp-final-withdrawal-info strong{
+      display:block;
+      color:#172235;
+      font-size:12px;
+      font-weight:950;
+    }
+
+    .tp-final-withdrawal-note{
+      margin:16px 0;
+      padding:12px;
+      border-radius:12px;
+      background:#f0fff6;
+      color:#315b45;
+      font-size:10px;
+      line-height:1.55;
+    }
+
+    .tp-final-withdrawal-done{
+      width:100%;
+      padding:14px;
+      border:0;
+      border-radius:13px;
+      background:#16d96f;
+      color:#062016;
+      font-size:12px;
+      font-weight:950;
+      cursor:pointer;
+    }
+
+    @keyframes tpPopupFade{
+      from{opacity:0}
+      to{opacity:1}
+    }
+
+    @keyframes tpPopupScale{
+      from{
+        opacity:0;
+        transform:scale(.92) translateY(10px);
+      }
+
+      to{
+        opacity:1;
+        transform:scale(1) translateY(0);
+      }
+    }
+
+    @media(max-width:600px){
+
+      .tp-final-withdrawal-card{
+        padding:27px 17px 18px;
+        border-radius:22px;
+      }
+
+      .tp-final-withdrawal-card h2{
+        font-size:24px;
+      }
+
+      .tp-final-withdrawal-amount{
+        font-size:22px;
+      }
+
+      .tp-final-withdrawal-info{
+        grid-template-columns:1fr;
+      }
+
+    }
+
+  `;
+
+  document.head.appendChild(style);
+
+})();
 /* =========================================================
    RESUME PREVIOUS WITHDRAWAL
    ========================================================= */
