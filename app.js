@@ -63,10 +63,10 @@ function dailyShuffle(items){
   return arr;
 }
 
-const TODAY_NOTIFICATIONS=dailyShuffle(DEMO_NOTIFICATIONS);
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)],money=n=>new Intl.NumberFormat('sw-TZ').format(n);
 $$('[data-link="registration"]').forEach(a=>a.href=CONFIG.registrationUrl);$$('[data-link="whatsapp"]').forEach(a=>a.href=CONFIG.whatsappUrl);$$('[data-link="channel"]').forEach(a=>a.href=CONFIG.channelUrl);$('#phoneText').textContent=CONFIG.phoneDisplay;$('#emailText').textContent=CONFIG.email;$('#activationFee').textContent=money(CONFIG.activationFee);$('#activationBonus').textContent=money(CONFIG.activationBonus);
 function tzDateISO(){const p=new Intl.DateTimeFormat('en-CA',{timeZone:'Africa/Dar_es_Salaam',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());const o=Object.fromEntries(p.map(x=>[x.type,x.value]));return `${o.year}-${o.month}-${o.day}`}
+const TODAY_NOTIFICATIONS=dailyShuffle(DEMO_NOTIFICATIONS);
 function dayIndex(){return Math.max(0,Math.floor((new Date(`${tzDateISO()}T00:00:00Z`)-new Date(`${CONFIG.anchorDate}T00:00:00Z`))/86400000))}
 const TZ='Africa/Dar_es_Salaam';
 const di=dayIndex(),reward=3000-(di%11)*100,countToday=40+(di*7)%21;
