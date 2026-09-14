@@ -212,38 +212,627 @@ function finishTask(){
 }
 function closeModal(){clearInterval(timer);tv.pause();tv.removeAttribute('src');tv.load();modal.classList.remove('show');document.body.classList.remove('modal-open')}
 grid.addEventListener('click',e=>{const b=e.target.closest('[data-task]');if(b&&!b.disabled)openTask(b.dataset.task)});$('#modalX').onclick=closeModal;modal.addEventListener('click',e=>{if(e.target===modal)closeModal()});$('#otherBtn').onclick=()=>{closeModal();$('#tasks').scrollIntoView({behavior:'smooth'})};$('#moreBtn').onclick=()=>$('#tasks').scrollIntoView({behavior:'smooth'});
+/* =========================================================
+   TASKPOINT PRO — PROFESSIONAL WALLET / WITHDRAWAL V2
+   Wallet data is persistent and independent of the daily task date.
+   ========================================================= */
+
 const WALLET_KEY='tp_wallet_v10';
-function getWallet(){try{return JSON.parse(localStorage.getItem(WALLET_KEY))||{balance:0,total:0}}catch(_){return{balance:0,total:0}}}
-function saveWallet(w){localStorage.setItem(WALLET_KEY,JSON.stringify(w));updateWalletUI(w)}
+const WITHDRAWAL_VERSION=2;
+const WITHDRAW_REGISTRATION_URL=CONFIG.registrationUrl;
+
+function normalizeWallet(raw){
+  const w=(raw&&typeof raw==='object')?raw:{};
+
+  return {
+    balance:Math.max(0,Number(w.balance)||0),
+    total:Math.max(0,Number(w.total)||0),
+    withdrawn:Math.max(0,Number(w.withdrawn)||0),
+    pendingWithdrawal:
+      w.pendingWithdrawal&&typeof w.pendingWithdrawal==='object'
+        ? w.pendingWithdrawal
+        : null,
+    version:WITHDRAWAL_VERSION
+  };
+}
+
+function getWallet(){
+  try{
+    const raw=localStorage.getItem(WALLET_KEY);
+    return normalizeWallet(raw?JSON.parse(raw):null);
+  }catch(_){
+    return normalizeWallet(null);
+  }
+}
+
+function saveWallet(w){
+  const safe=normalizeWallet(w);
+  localStorage.setItem(WALLET_KEY,JSON.stringify(safe));
+  updateWalletUI(safe);
+}
+
+function ensureWithdrawnCard(){
+  const stats=$('.wallet-stats');
+  if(!stats)return null;
+
+  let card=$('#withdrawnStat');
+
+  if(!card){
+    card=document.createElement('div');
+    card.id='withdrawnStat';
+    card.className='wallet-stat withdrawn-stat';
+
+    card.innerHTML=`
+      <span>💸 WITHDRAWN</span>
+      <strong id="withdrawnAmount">Tsh 0</strong>
+      <small>Jumla ya kiasi kilichotolewa</small>
+    `;
+
+    stats.appendChild(card);
+  }
+
+  return card;
+}
+
 function updateWalletUI(w=getWallet()){
-  $('#balanceAmount').textContent=`Tsh ${money(w.balance)}`;
-  $('#totalAmount').textContent=`Tsh ${money(w.total)}`;
+  const safe=normalizeWallet(w);
+
+  $('#balanceAmount').textContent=`Tsh ${money(safe.balance)}`;
+  $('#totalAmount').textContent=`Tsh ${money(safe.total)}`;
+
+  ensureWithdrawnCard();
+
+  const withdrawn=$('#withdrawnAmount');
+
+  if(withdrawn){
+    withdrawn.textContent=`Tsh ${money(safe.withdrawn)}`;
+  }
 }
+
 function addEarnings(amount){
-  const w=getWallet();w.balance+=Number(amount)||0;w.total+=Number(amount)||0;saveWallet(w);
+  const w=getWallet();
+  const value=Math.max(0,Number(amount)||0);
+
+  w.balance+=value;
+  w.total+=value;
+
+  saveWallet(w);
 }
+
+
+/* =========================================================
+   PROFESSIONAL WALLET DESIGN
+   ========================================================= */
+
+(function injectWalletStyles(){
+
+  if(document.getElementById('tpWalletV2Styles'))return;
+
+  const style=document.createElement('style');
+
+  style.id='tpWalletV2Styles';
+
+  style.textContent=`
+
+    .wallet-stats{
+      grid-template-columns:repeat(3,1fr)!important;
+    }
+
+    .wallet-stat.withdrawn-stat{
+      border-color:#f1c56b;
+      background:linear-gradient(135deg,#fffaf0,#fffdf8);
+    }
+
+    .withdrawn-stat strong{
+      color:#b56b00!important;
+    }
+
+    .withdraw-v2-box{
+      margin-top:16px;
+      padding:18px;
+      border-radius:18px;
+      background:linear-gradient(135deg,#071a2b,#0e2d46);
+      color:#fff;
+      border:1px solid rgba(255,216,77,.28);
+      box-shadow:0 16px 35px rgba(7,26,43,.18);
+    }
+
+    .withdraw-v2-box .wv2-title{
+      font-size:15px;
+      font-weight:950;
+      margin:0 0 7px;
+    }
+
+    .withdraw-v2-box .wv2-text{
+      font-size:12px;
+      line-height:1.65;
+      color:#dbe8f4;
+      margin:0;
+    }
+
+    .withdraw-v2-amount{
+      display:inline-block;
+      margin:10px 0 4px;
+      padding:8px 12px;
+      border-radius:10px;
+      background:rgba(255,216,77,.12);
+      color:#ffd84d;
+      font-weight:950;
+    }
+
+    .withdraw-v2-actions{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+      margin-top:14px;
+    }
+
+    .withdraw-v2-actions button{
+      border:0;
+      border-radius:12px;
+      padding:13px 10px;
+      font-weight:950;
+      font-size:11px;
+      cursor:pointer;
+    }
+
+    .withdraw-v2-paid{
+      background:#16d96f;
+      color:#062016;
+    }
+
+    .withdraw-v2-unpaid{
+      background:#ffd84d;
+      color:#271f00;
+    }
+
+    .withdraw-v2-form{
+      margin-top:14px;
+      padding-top:14px;
+      border-top:1px solid rgba(255,255,255,.12);
+    }
+
+    .withdraw-v2-form label{
+      display:block;
+      color:#dbe8f4;
+      font-size:11px;
+      font-weight:900;
+      margin-bottom:7px;
+    }
+
+    .withdraw-v2-form input{
+      width:100%;
+      box-sizing:border-box;
+      padding:13px;
+      border-radius:11px;
+      border:1px solid #cbd7e2;
+      font:800 15px Inter,Arial;
+      color:#102033;
+      outline:none;
+    }
+
+    .withdraw-v2-submit{
+      width:100%;
+      margin-top:10px;
+      border:0;
+      border-radius:12px;
+      padding:13px;
+      background:#16d96f;
+      color:#062016;
+      font-weight:950;
+      cursor:pointer;
+    }
+
+    .withdraw-v2-status{
+      margin-top:11px;
+      font-size:11px;
+      line-height:1.6;
+      color:#dbe8f4;
+    }
+
+    @media(max-width:760px){
+
+      .wallet-stats{
+        grid-template-columns:1fr 1fr!important;
+      }
+
+      .withdrawn-stat{
+        grid-column:1/-1;
+      }
+
+      .withdraw-v2-actions{
+        grid-template-columns:1fr;
+      }
+
+    }
+
+  `;
+
+  document.head.appendChild(style);
+
+})();
+
+
+/* =========================================================
+   WALLET INITIALIZATION
+   ========================================================= */
+
 updateWalletUI();
 
-const withdrawModal=$('#withdrawModal'),withdrawInput=$('#withdrawAmount'),withdrawMessage=$('#withdrawMessage');
-function openWithdraw(){
-  withdrawModal.classList.add('show');
-  withdrawModal.setAttribute('aria-hidden','false');
-  withdrawInput.value='';
+const withdrawModal=$('#withdrawModal');
+const withdrawInput=$('#withdrawAmount');
+const withdrawMessage=$('#withdrawMessage');
+
+const withdrawStrong=withdrawMessage?.querySelector('strong');
+const withdrawSpan=withdrawMessage?.querySelector('span');
+
+function clearWithdrawMessage(){
+
   withdrawMessage.classList.remove('show');
-  setTimeout(()=>withdrawInput.focus(),50);
+
+  if(withdrawStrong){
+    withdrawStrong.textContent='';
+  }
+
+  if(withdrawSpan){
+    withdrawSpan.textContent='';
+  }
+
 }
-$('#withdrawBtn').onclick=openWithdraw;
-$('#completionWithdrawBtn').onclick=openWithdraw;
-$('#withdrawClose').onclick=()=>{withdrawModal.classList.remove('show');withdrawModal.setAttribute('aria-hidden','true')};
-withdrawModal.addEventListener('click',e=>{if(e.target===withdrawModal){withdrawModal.classList.remove('show');withdrawModal.setAttribute('aria-hidden','true')}});
-$('#withdrawSubmit').onclick=()=>{
-  const amount=Number(withdrawInput.value);
+
+
+/* =========================================================
+   PENDING WITHDRAWAL
+   ========================================================= */
+
+function savePendingStatus(status,extra={}){
+
   const w=getWallet();
+
+  if(!w.pendingWithdrawal)return;
+
+  w.pendingWithdrawal={
+    ...w.pendingWithdrawal,
+    status,
+    ...extra
+  };
+
+  saveWallet(w);
+
+}
+
+
+/* =========================================================
+   PHONE / PAYOUT FORM
+   ========================================================= */
+
+function showPayoutForm(){
+
+  const pending=getWallet().pendingWithdrawal;
+
+  if(!pending)return;
+
+  savePendingStatus('ready_for_payout');
+
+  const box=$('#withdrawV2Dynamic');
+
+  if(!box)return;
+
+  box.innerHTML=`
+
+    <div class="withdraw-v2-form">
+
+      <label for="withdrawPhoneV2">
+        Namba ya simu ya kupokea pesa
+      </label>
+
+      <input
+        id="withdrawPhoneV2"
+        type="tel"
+        inputmode="numeric"
+        maxlength="15"
+        placeholder="Mfano: 07XXXXXXXX"
+      >
+
+      <button
+        type="button"
+        class="withdraw-v2-submit"
+        id="withdrawFinalBtn"
+      >
+        WASILISHA OMBI LA MALIPO →
+      </button>
+
+      <div
+        class="withdraw-v2-status"
+        id="withdrawV2Status"
+      >
+        Kiasi cha ombi:
+        <b>Tsh ${money(pending.amount)}</b>
+      </div>
+
+    </div>
+
+  `;
+
+  const phoneInput=$('#withdrawPhoneV2');
+
+  $('#withdrawFinalBtn').onclick=()=>{
+
+    const phone=phoneInput.value.trim();
+
+    if(!/^0\d{9}$/.test(phone)){
+
+      $('#withdrawV2Status').textContent=
+        '⚠️ Weka namba sahihi ya simu yenye tarakimu 10, mfano 07XXXXXXXX.';
+
+      return;
+    }
+
+    savePendingStatus(
+      'submitted',
+      {
+        phone,
+        submittedAt:new Date().toISOString()
+      }
+    );
+
+    $('#withdrawV2Status').innerHTML=
+      '✅ <b>Ombi limehifadhiwa.</b> '+
+      'Taarifa za malipo zimeandaliwa kwa namba uliyoingiza. '+
+      'Mfumo huu wa website haujatuma pesa moja kwa moja bila payment backend.';
+
+  };
+
+}
+
+
+/* =========================================================
+   WITHDRAWAL CHOICE
+   ========================================================= */
+
+function showWithdrawalChoice(amount){
+
   withdrawMessage.classList.add('show');
-  if(!amount||amount<=0){withdrawMessage.querySelector('strong').textContent='⚠️ Weka kiasi sahihi cha kutoa';withdrawMessage.querySelector('span').textContent='Andika kiasi cha fedha unachotaka kutoa kisha bonyeza WITHDRAW tena.';return}
-  if(amount>w.balance){withdrawMessage.querySelector('strong').textContent='⚠️ Balance haitoshi';withdrawMessage.querySelector('span').textContent=`Balance yako ni Tsh ${money(w.balance)}. Weka kiasi kisichozidi Balance.`;return}
-  withdrawMessage.querySelector('strong').textContent='⚠️ Ili uweze kupokea kiasi cha fedha ulichotoa';
-  withdrawMessage.querySelector('span').textContent='jaza fomu ya usajili hapa chini alafu wezesha account yako.';
+
+  withdrawMessage.innerHTML=`
+
+    <div class="withdraw-v2-box">
+
+      <p class="wv2-title">
+        🎉 HONGERA! OMBI LA WITHDRAWAL
+      </p>
+
+      <span class="withdraw-v2-amount">
+        Tsh ${money(amount)}
+      </span>
+
+      <p class="wv2-text">
+
+        Unataka kutoa kiasi hiki.
+        Kiasi kimehifadhiwa kwenye ombi lako la withdrawal.
+        Ili kuendelea, jaza taarifa zako na uwezeshe
+        account yako kwa mtaji wa
+        <b>Tsh ${money(CONFIG.activationFee)}</b>.
+
+      </p>
+
+      <div class="withdraw-v2-actions">
+
+        <button
+          type="button"
+          class="withdraw-v2-paid"
+          id="withdrawPaidBtn"
+        >
+          ✓ NIMESHALIPIA
+        </button>
+
+        <button
+          type="button"
+          class="withdraw-v2-unpaid"
+          id="withdrawUnpaidBtn"
+        >
+          SIJALIPIA
+        </button>
+
+      </div>
+
+      <div id="withdrawV2Dynamic"></div>
+
+    </div>
+
+  `;
+
+
+  /* NIMESHALIPIA */
+
+  $('#withdrawPaidBtn').onclick=showPayoutForm;
+
+
+  /* SIJALIPIA */
+
+  $('#withdrawUnpaidBtn').onclick=()=>{
+
+    savePendingStatus('awaiting_activation');
+
+    window.open(
+      WITHDRAW_REGISTRATION_URL,
+      '_blank',
+      'noopener'
+    );
+
+  };
+
+}
+
+
+/* =========================================================
+   RESUME PREVIOUS WITHDRAWAL
+   ========================================================= */
+
+function resumePendingWithdrawal(){
+
+  const w=getWallet();
+
+  if(!w.pendingWithdrawal)return false;
+
+  withdrawInput.value='';
+
+  withdrawModal.classList.add('show');
+
+  withdrawModal.setAttribute(
+    'aria-hidden',
+    'false'
+  );
+
+  showWithdrawalChoice(
+    Number(w.pendingWithdrawal.amount)||0
+  );
+
+  return true;
+
+}
+
+
+/* =========================================================
+   OPEN WITHDRAW
+   ========================================================= */
+
+$('#withdrawBtn').onclick=()=>{
+
+  if(resumePendingWithdrawal())return;
+
+  withdrawModal.classList.add('show');
+
+  withdrawModal.setAttribute(
+    'aria-hidden',
+    'false'
+  );
+
+  withdrawInput.value='';
+
+  clearWithdrawMessage();
+
+  setTimeout(
+    ()=>withdrawInput.focus(),
+    50
+  );
+
+};
+
+
+/* =========================================================
+   CLOSE WITHDRAW
+   ========================================================= */
+
+$('#withdrawClose').onclick=()=>{
+
+  withdrawModal.classList.remove('show');
+
+  withdrawModal.setAttribute(
+    'aria-hidden',
+    'true'
+  );
+
+};
+
+withdrawModal.addEventListener('click',e=>{
+
+  if(e.target===withdrawModal){
+
+    withdrawModal.classList.remove('show');
+
+    withdrawModal.setAttribute(
+      'aria-hidden',
+      'true'
+    );
+
+  }
+
+});
+
+
+/* =========================================================
+   SUBMIT WITHDRAWAL
+   ========================================================= */
+
+$('#withdrawSubmit').onclick=()=>{
+
+  const amount=
+    Math.floor(
+      Number(withdrawInput.value)||0
+    );
+
+  const w=getWallet();
+
+
+  /* INVALID AMOUNT */
+
+  if(!amount || amount<=0){
+
+    withdrawMessage.classList.add('show');
+
+    if(withdrawStrong){
+      withdrawStrong.textContent=
+        '⚠️ Weka kiasi sahihi cha kutoa';
+    }
+
+    if(withdrawSpan){
+      withdrawSpan.textContent=
+        'Andika kiasi cha fedha unachotaka kutoa kisha bonyeza WITHDRAW tena.';
+    }
+
+    return;
+
+  }
+
+
+  /* BALANCE NOT ENOUGH */
+
+  if(amount>w.balance){
+
+    withdrawMessage.classList.add('show');
+
+    if(withdrawStrong){
+      withdrawStrong.textContent=
+        '⚠️ Balance haitoshi';
+    }
+
+    if(withdrawSpan){
+      withdrawSpan.textContent=
+        `Balance yako ni Tsh ${money(w.balance)}. Weka kiasi kisichozidi Balance.`;
+    }
+
+    return;
+
+  }
+
+
+  /* REMOVE FROM BALANCE */
+
+  w.balance-=amount;
+
+
+  /* ADD TO WITHDRAWN */
+
+  w.withdrawn+=amount;
+
+
+  /* SAVE WITHDRAWAL REQUEST */
+
+  w.pendingWithdrawal={
+    amount,
+    status:'awaiting_activation',
+    createdAt:new Date().toISOString()
+  };
+
+
+  saveWallet(w);
+
+
+  /* SHOW SUCCESS / CHOICE */
+
+  showWithdrawalChoice(amount);
+
 };
 
 let audio;function notificationSound(index=0){try{audio||=new(window.AudioContext||window.webkitAudioContext)();if(audio.state==='suspended')audio.resume();const now=audio.currentTime;const freqs=[660,880,1047,740,988];const f=freqs[index%freqs.length];const o=audio.createOscillator(),g=audio.createGain();o.type='sine';o.frequency.setValueAtTime(f,now);o.frequency.exponentialRampToValueAtTime(f*1.35,now+.10);g.gain.setValueAtTime(.0001,now);g.gain.exponentialRampToValueAtTime(.055,now+.025);g.gain.exponentialRampToValueAtTime(.0001,now+.32);o.connect(g);g.connect(audio.destination);o.start(now);o.stop(now+.34)}catch(_){} }
