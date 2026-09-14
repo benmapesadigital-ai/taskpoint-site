@@ -105,20 +105,79 @@ function stableHash(s){let h=2166136261;for(let i=0;i<s.length;i++){h^=s.charCod
 function seededOrder(arr,seed){
   return [...arr].sort((a,b)=>stableHash(`${seed}:${a.key}`)-stableHash(`${seed}:${b.key}`));
 }
-const dailyTaskKey=`tp_daily_tasks_${tzDateISO()}`;
-const storedDaily=JSON.parse(localStorage.getItem(dailyTaskKey)||'null');
-const usedEver=JSON.parse(localStorage.getItem('tp_used_task_keys')||'[]');
-const usedSet=new Set(usedEver);
-let TASKS;
+
+const dailyTaskKey = `tp_daily_tasks_${tzDateISO()}`;
+
+function safeReadJSON(key, fallback){
+  try{
+    const raw = localStorage.getItem(key);
+
+    if(!raw) return fallback;
+
+    const parsed = JSON.parse(raw);
+
+    return parsed ?? fallback;
+  }catch(error){
+    console.warn('TaskPoint Pro storage reset:', key, error);
+
+    try{
+      localStorage.removeItem(key);
+    }catch(_){}
+
+    return fallback;
+  }
+}
+
+const storedDaily = safeReadJSON(dailyTaskKey, null);
+const usedEver = safeReadJSON('tp_used_task_keys', []);
+
+const usedSet = new Set(
+  Array.isArray(usedEver) ? usedEver : []
+);
+
+let TASKS = [];
+
 if(Array.isArray(storedDaily) && storedDaily.length){
-  TASKS=storedDaily.map(key=>taskPool.find(t=>t.key===key)).filter(Boolean);
-}else{
-  const ordered=seededOrder(taskPool,di+1);
-  const fresh=ordered.filter(t=>!usedSet.has(t.key));
-  TASKS=fresh.slice(0,countToday);
-  localStorage.setItem(dailyTaskKey,JSON.stringify(TASKS.map(t=>t.key)));
-  TASKS.forEach(t=>usedSet.add(t.key));
-  localStorage.setItem('tp_used_task_keys',JSON.stringify([...usedSet]));
+
+  const savedTasks = storedDaily
+    .map(key => taskPool.find(t => t.key === key))
+    .filter(Boolean);
+
+  if(savedTasks.length){
+    TASKS = savedTasks;
+  }
+}
+
+if(!TASKS.length){
+
+  const ordered = seededOrder(taskPool, di + 1);
+
+  let fresh = ordered.filter(t => !usedSet.has(t.key));
+
+  // Ikiwa tasks zilizotumika zimefika mwisho,
+  // anza mzunguko mpya bila kuvunja website.
+  if(fresh.length < countToday){
+    usedSet.clear();
+    fresh = ordered;
+  }
+
+  TASKS = fresh.slice(0, countToday);
+
+  try{
+    localStorage.setItem(
+      dailyTaskKey,
+      JSON.stringify(TASKS.map(t => t.key))
+    );
+
+    TASKS.forEach(t => usedSet.add(t.key));
+
+    localStorage.setItem(
+      'tp_used_task_keys',
+      JSON.stringify([...usedSet])
+    );
+  }catch(error){
+    console.warn('TaskPoint Pro could not save task state:', error);
+  }
 }
 
 const grid=$('#taskGrid');
