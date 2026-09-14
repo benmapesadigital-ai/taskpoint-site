@@ -578,7 +578,7 @@ function showPayoutForm(){
 
     $('#withdrawV2Status').innerHTML=
       '✅ <b>Hongera Kwa Kutoa Fedha.</b> '+
-      'Kiasi cha fedha ulichotoa kitakufikia ndani ya Dakika 1-5. '+
+      'Kiasi cha fedha ulichotoa kitakufikia ndani ya Dakika 1-5, Kama dakika zitapita Tuma ujumbe kawaida upate usaidizi. '+
       'Na kama namba uliyoandika sio sahihi/umeikosea Bonyeza kitufe cha kutuma ujumbe kawaida toa taarifa mapema.';
 
   };
