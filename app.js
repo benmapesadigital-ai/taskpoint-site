@@ -38,7 +38,7 @@ const COMMUNITY=[['AM','Asha M.','🇹🇿 Tanzania','Mfumo ni rahisi kutumia na
 ['PE','Peter J.','🇹🇿 Tanzania','Maelekezo yako wazi na task zinaonekana vizuri.'],
 ['MA','Mary S.','🇹🇿 Tanzania','Muonekano wa mfumo ni mzuri na unaeleweka haraka.'],
 ['SA','Samuel K.','🇹🇿 Tanzania','Nimependa mpangilio wa task na taarifa zake.']
-];];
+];
 const DEMO_NOTIFICATIONS=[
 ['Amina','100,000'],['John','120,000'],['Neema','200,000'],['Brian','100,000'],
 ['Zawadi','120,000'],['David','200,000'],['Rehema','100,000'],['Michael','120,000'],
