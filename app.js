@@ -182,7 +182,9 @@ if(!TASKS.length){
 
 const grid=$('#taskGrid');
 const completedToday = new Set(
-  safeReadJSON(`tp_completed_${tzDateISO()}`, []));
+  safeReadJSON(`tp_completed_${tzDateISO()}`, [])
+);
+
 function renderTasks(){
   grid.innerHTML='';
   TASKS.forEach((t,i)=>{
