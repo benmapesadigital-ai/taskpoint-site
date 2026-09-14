@@ -306,6 +306,536 @@ function addEarnings(amount){
   saveWallet(w);
 }
 
+/* =========================================================
+   WITHDRAWAL HISTORY — PROFESSIONAL MENU
+   ========================================================= */
+
+function ensureWithdrawalHistoryUI(){
+
+  const stats=$('.wallet-stats');
+
+  if(!stats)return;
+
+  let wrapper=$('#withdrawalHistoryWrapper');
+
+  if(wrapper)return;
+
+  wrapper=document.createElement('div');
+  wrapper.id='withdrawalHistoryWrapper';
+  wrapper.className='withdrawal-history-wrapper';
+
+  wrapper.innerHTML=`
+
+    <button
+      type="button"
+      class="withdrawal-history-btn"
+      id="withdrawalHistoryBtn"
+    >
+      <span class="wh-icon">📋</span>
+
+      <span class="wh-content">
+        <strong>WITHDRAWAL HISTORY</strong>
+        <small>Angalia historia ya maombi yako ya kutoa pesa</small>
+      </span>
+
+      <span class="wh-arrow">›</span>
+
+    </button>
+
+  `;
+
+  stats.parentNode.insertBefore(
+    wrapper,
+    stats.nextSibling
+  );
+
+
+  /* =======================================================
+     HISTORY MODAL
+     ======================================================= */
+
+  const modal=document.createElement('div');
+
+  modal.id='withdrawalHistoryModal';
+  modal.className='withdrawal-history-modal';
+  modal.setAttribute('aria-hidden','true');
+
+  modal.innerHTML=`
+
+    <div
+      class="withdrawal-history-card"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="withdrawalHistoryTitle"
+    >
+
+      <button
+        type="button"
+        class="withdrawal-history-close"
+        id="withdrawalHistoryClose"
+        aria-label="Funga"
+      >
+        ×
+      </button>
+
+      <div class="withdrawal-history-header">
+
+        <div class="withdrawal-history-header-icon">
+          📋
+        </div>
+
+        <div>
+          <h3 id="withdrawalHistoryTitle">
+            WITHDRAWAL HISTORY
+          </h3>
+
+          <p>
+            Historia ya maombi yako ya kutoa pesa
+          </p>
+        </div>
+
+      </div>
+
+      <div
+        id="withdrawalHistoryList"
+        class="withdrawal-history-list"
+      ></div>
+
+    </div>
+
+  `;
+
+  document.body.appendChild(modal);
+
+
+  /* =======================================================
+     OPEN HISTORY
+     ======================================================= */
+
+  $('#withdrawalHistoryBtn').onclick=()=>{
+
+    renderWithdrawalHistory();
+
+    modal.classList.add('show');
+
+    modal.setAttribute(
+      'aria-hidden',
+      'false'
+    );
+
+  };
+
+
+  /* =======================================================
+     CLOSE HISTORY
+     ======================================================= */
+
+  $('#withdrawalHistoryClose').onclick=()=>{
+
+    modal.classList.remove('show');
+
+    modal.setAttribute(
+      'aria-hidden',
+      'true'
+    );
+
+  };
+
+
+  modal.addEventListener('click',e=>{
+
+    if(e.target===modal){
+
+      modal.classList.remove('show');
+
+      modal.setAttribute(
+        'aria-hidden',
+        'true'
+      );
+
+    }
+
+  });
+
+}
+
+
+/* =========================================================
+   RENDER WITHDRAWAL HISTORY
+   ========================================================= */
+
+function renderWithdrawalHistory(){
+
+  const list=$('#withdrawalHistoryList');
+
+  if(!list)return;
+
+  const w=getWallet();
+
+  const history=Array.isArray(w.withdrawalHistory)
+    ? [...w.withdrawalHistory].reverse()
+    : [];
+
+
+  if(!history.length){
+
+    list.innerHTML=`
+
+      <div class="withdrawal-history-empty">
+
+        <div class="empty-icon">
+          📋
+        </div>
+
+        <strong>
+          Hakuna Withdrawal History
+        </strong>
+
+        <span>
+          Maombi yako ya kutoa pesa yataonekana hapa.
+        </span>
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  list.innerHTML=history.map(item=>{
+
+    const amount=money(item.amount);
+
+    const date=item.createdAt
+      ? new Date(item.createdAt).toLocaleString(
+          'sw-TZ',
+          {
+            day:'2-digit',
+            month:'2-digit',
+            year:'numeric',
+            hour:'2-digit',
+            minute:'2-digit'
+          }
+        )
+      : '—';
+
+
+    let statusText='OMBI LIMEPOKELEWA';
+
+    if(item.status==='awaiting_activation'){
+      statusText='INASUBIRI UWEZESHAJI';
+    }
+
+    if(item.status==='ready_for_payout'){
+      statusText='IKO TAYARI KWA MALIPO';
+    }
+
+    if(item.status==='submitted'){
+      statusText='OMBI LIMETUMWA';
+    }
+
+
+    return `
+
+      <div class="withdrawal-history-item">
+
+        <div class="wh-item-top">
+
+          <div class="wh-item-money">
+            💸 Tsh ${amount}
+          </div>
+
+          <span class="wh-status">
+            ${statusText}
+          </span>
+
+        </div>
+
+        <div class="wh-item-details">
+
+          <span>
+            📅 ${date}
+          </span>
+
+          ${
+            item.phone
+              ? `<span>📱 ${item.phone}</span>`
+              : ''
+          }
+
+        </div>
+
+      </div>
+
+    `;
+
+  }).join('');
+
+}
+
+
+/* =========================================================
+   HISTORY DESIGN
+   ========================================================= */
+
+(function injectWithdrawalHistoryStyles(){
+
+  if(document.getElementById('tpWithdrawalHistoryStyles'))
+    return;
+
+  const style=document.createElement('style');
+
+  style.id='tpWithdrawalHistoryStyles';
+
+  style.textContent=`
+
+    .withdrawal-history-wrapper{
+      width:100%;
+      margin-top:14px;
+    }
+
+    .withdrawal-history-btn{
+      width:100%;
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:14px 16px;
+      border:1px solid #d9e2eb;
+      border-radius:15px;
+      background:linear-gradient(135deg,#ffffff,#f7fafc);
+      color:#102033;
+      cursor:pointer;
+      text-align:left;
+      box-shadow:0 8px 22px rgba(0,0,0,.07);
+    }
+
+    .withdrawal-history-btn:hover{
+      transform:translateY(-1px);
+    }
+
+    .wh-icon{
+      width:40px;
+      height:40px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border-radius:12px;
+      background:#eef5ff;
+      font-size:20px;
+      flex-shrink:0;
+    }
+
+    .wh-content{
+      flex:1;
+      min-width:0;
+    }
+
+    .wh-content strong{
+      display:block;
+      font-size:13px;
+      font-weight:950;
+      letter-spacing:.3px;
+    }
+
+    .wh-content small{
+      display:block;
+      margin-top:4px;
+      color:#657487;
+      font-size:10px;
+      line-height:1.4;
+    }
+
+    .wh-arrow{
+      font-size:28px;
+      color:#657487;
+      line-height:1;
+    }
+
+
+    /* HISTORY POPUP */
+
+    .withdrawal-history-modal{
+      position:fixed;
+      inset:0;
+      z-index:99999;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+      background:rgba(3,10,20,.72);
+      backdrop-filter:blur(6px);
+    }
+
+    .withdrawal-history-modal.show{
+      display:flex;
+    }
+
+    .withdrawal-history-card{
+      position:relative;
+      width:min(560px,100%);
+      max-height:82vh;
+      overflow:auto;
+      border-radius:22px;
+      padding:22px;
+      background:#ffffff;
+      box-shadow:0 30px 80px rgba(0,0,0,.35);
+    }
+
+    .withdrawal-history-close{
+      position:absolute;
+      top:12px;
+      right:12px;
+      width:38px;
+      height:38px;
+      border:0;
+      border-radius:50%;
+      background:#eef2f6;
+      color:#172235;
+      font-size:24px;
+      cursor:pointer;
+    }
+
+    .withdrawal-history-header{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding-right:45px;
+      margin-bottom:18px;
+    }
+
+    .withdrawal-history-header-icon{
+      width:48px;
+      height:48px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border-radius:14px;
+      background:#eef5ff;
+      font-size:23px;
+    }
+
+    .withdrawal-history-header h3{
+      margin:0;
+      color:#102033;
+      font-size:16px;
+      font-weight:950;
+    }
+
+    .withdrawal-history-header p{
+      margin:4px 0 0;
+      color:#687789;
+      font-size:11px;
+    }
+
+
+    /* HISTORY ITEMS */
+
+    .withdrawal-history-list{
+      display:grid;
+      gap:10px;
+    }
+
+    .withdrawal-history-item{
+      padding:14px;
+      border:1px solid #e1e7ee;
+      border-radius:15px;
+      background:#f9fbfd;
+    }
+
+    .wh-item-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+    }
+
+    .wh-item-money{
+      color:#102033;
+      font-size:14px;
+      font-weight:950;
+    }
+
+    .wh-status{
+      padding:5px 8px;
+      border-radius:8px;
+      background:#fff4cf;
+      color:#805d00;
+      font-size:8px;
+      font-weight:950;
+      text-align:center;
+    }
+
+    .wh-item-details{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px 14px;
+      margin-top:9px;
+      color:#69798a;
+      font-size:10px;
+    }
+
+
+    /* EMPTY HISTORY */
+
+    .withdrawal-history-empty{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      text-align:center;
+      padding:35px 20px;
+      color:#667688;
+    }
+
+    .withdrawal-history-empty .empty-icon{
+      font-size:35px;
+      margin-bottom:10px;
+    }
+
+    .withdrawal-history-empty strong{
+      color:#172235;
+      font-size:14px;
+    }
+
+    .withdrawal-history-empty span{
+      margin-top:5px;
+      font-size:11px;
+      line-height:1.5;
+    }
+
+
+    @media(max-width:760px){
+
+      .withdrawal-history-card{
+        width:100%;
+        max-height:85vh;
+        padding:18px;
+        border-radius:20px;
+      }
+
+      .wh-item-top{
+        align-items:flex-start;
+        flex-direction:column;
+        gap:8px;
+      }
+
+      .wh-status{
+        align-self:flex-start;
+      }
+
+    }
+
+  `;
+
+  document.head.appendChild(style);
+
+})();
+
+
+/* Create History UI */
+
+ensureWithdrawalHistoryUI();
 
 /* =========================================================
    PROFESSIONAL WALLET DESIGN
