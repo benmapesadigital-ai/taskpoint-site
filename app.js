@@ -228,10 +228,17 @@ function normalizeWallet(raw){
     balance:Math.max(0,Number(w.balance)||0),
     total:Math.max(0,Number(w.total)||0),
     withdrawn:Math.max(0,Number(w.withdrawn)||0),
+
     pendingWithdrawal:
       w.pendingWithdrawal&&typeof w.pendingWithdrawal==='object'
         ? w.pendingWithdrawal
         : null,
+
+    withdrawalHistory:
+      Array.isArray(w.withdrawalHistory)
+        ? w.withdrawalHistory
+        : [],
+
     version:WITHDRAWAL_VERSION
   };
 }
