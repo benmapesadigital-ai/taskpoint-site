@@ -181,7 +181,8 @@ if(!TASKS.length){
 }
 
 const grid=$('#taskGrid');
-const completedToday=new Set(JSON.parse(localStorage.getItem(`tp_completed_${tzDateISO()}`)||'[]'));
+const completedToday = new Set(
+  safeReadJSON(`tp_completed_${tzDateISO()}`, []));
 function renderTasks(){
   grid.innerHTML='';
   TASKS.forEach((t,i)=>{
