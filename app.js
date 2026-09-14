@@ -577,9 +577,9 @@ function showPayoutForm(){
     );
 
     $('#withdrawV2Status').innerHTML=
-      '✅ <b>Ombi limehifadhiwa.</b> '+
-      'Taarifa za malipo zimeandaliwa kwa namba uliyoingiza. '+
-      'Mfumo huu wa website haujatuma pesa moja kwa moja bila payment backend.';
+      '✅ <b>Hongera Kwa Kutoa Fedha.</b> '+
+      'Kiasi cha fedha ulichotoa kitakufikia ndani ya Dakika 1-5. '+
+      'Na kama namba uliyoandika sio sahihi/umeikosea Bonyeza kitufe cha kutuma ujumbe kawaida toa taarifa mapema.';
 
   };
 
