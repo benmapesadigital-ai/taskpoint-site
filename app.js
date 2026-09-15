@@ -1607,7 +1607,22 @@ $('#withdrawBtn').onclick=()=>{
   );
 
 };
+/* =========================================================
+   COMPLETION WITHDRAW BUTTON
+   Uses the exact same withdrawal flow as Dashboard.
+   ========================================================= */
 
+const completionWithdrawBtn=$('#completionWithdrawBtn');
+
+if(completionWithdrawBtn){
+
+  completionWithdrawBtn.onclick=()=>{
+
+    $('#withdrawBtn').click();
+
+  };
+
+   }
 
 /* =========================================================
    CLOSE WITHDRAW
