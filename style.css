@@ -1830,3 +1830,248 @@ body{
     opacity:.9;
   }
 }
+
+/* TASKPOINT PRO — TOP ACTION BUTTONS V2 */
+.nav-actions{
+  display:grid !important;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+  width:100%;
+  margin-left:auto;
+}
+
+.action-card{
+  position:relative;
+  display:flex !important;
+  align-items:center;
+  justify-content:center;
+  gap:9px;
+  min-height:54px;
+  padding:12px 14px !important;
+  border-radius:14px !important;
+  text-decoration:none !important;
+  color:#fff !important;
+  font-weight:900;
+  font-size:12px;
+  cursor:pointer;
+  overflow:hidden;
+  transition:transform .2s ease,box-shadow .2s ease,filter .2s ease;
+  border:1px solid rgba(255,255,255,.22) !important;
+}
+
+.action-card strong{
+  color:#fff !important;
+  font-size:12px;
+  font-weight:900;
+  white-space:nowrap;
+}
+
+.action-card-icon{
+  width:34px;
+  height:34px;
+  min-width:34px;
+  border-radius:50%;
+  display:grid !important;
+  place-items:center;
+  font-size:20px;
+  color:#fff !important;
+  background:rgba(255,255,255,.18);
+  border:1px solid rgba(255,255,255,.35);
+}
+
+.whatsapp-action{
+  background:linear-gradient(135deg,#10c96b,#079d52) !important;
+  box-shadow:0 8px 22px rgba(16,201,107,.25);
+}
+
+.channel-action{
+  background:linear-gradient(135deg,#2587ee,#1262d8) !important;
+  box-shadow:0 8px 22px rgba(37,135,238,.25);
+}
+
+.account-action{
+  background:linear-gradient(135deg,#ffad18,#ed7800) !important;
+  box-shadow:0 8px 22px rgba(255,157,20,.25);
+}
+
+.app-action{
+  background:linear-gradient(135deg,#8d22f5,#5c0fce) !important;
+  box-shadow:0 8px 22px rgba(141,34,245,.25);
+}
+
+.action-card:hover{
+  transform:translateY(-2px);
+  filter:brightness(1.06);
+}
+
+.action-card:active{
+  transform:scale(.97);
+}
+
+/* Ondoa kabisa vitu vya zamani */
+.action-card small,
+.action-card-arrow,
+.action-card-cta{
+  display:none !important;
+}
+
+/* MOBILE */
+@media(max-width:760px){
+  .nav-actions{
+    grid-template-columns:repeat(2,1fr);
+    gap:9px;
+    width:100%;
+  }
+
+  .action-card{
+    min-height:58px;
+    padding:10px 8px !important;
+    border-radius:14px !important;
+  }
+
+  .action-card strong{
+    font-size:11px;
+  }
+
+  .action-card-icon{
+    width:32px;
+    height:32px;
+    min-width:32px;
+    font-size:18px;
+  }
+}
+
+@media(max-width:420px){
+  .nav-actions{
+    gap:8px;
+  }
+
+  .action-card{
+    min-height:55px;
+    padding:9px 6px !important;
+    gap:7px;
+  }
+
+  .action-card strong{
+    font-size:10px;
+  }
+
+  .action-card-icon{
+    width:30px;
+    height:30px;
+    min-width:30px;
+    font-size:17px;
+  }
+}
+
+/* TASKPOINT PRO — HEADER LAYOUT V3 */
+
+@media(min-width:761px){
+  .nav{
+    padding-left:3%;
+    padding-right:3%;
+    gap:18px;
+  }
+
+  .logo{
+    flex:0 0 auto;
+    margin-right:4px;
+  }
+
+  .desktop-nav{
+    display:none;
+  }
+
+  .nav-actions{
+    flex:1;
+    max-width:760px;
+    margin-left:auto;
+  }
+}
+
+@media(max-width:760px){
+  .nav{
+    height:auto;
+    min-height:74px;
+    padding:10px 12px;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+
+  .logo{
+    width:100%;
+    justify-content:center;
+    margin-bottom:2px;
+  }
+
+  .logo-icon{
+    width:42px;
+    height:42px;
+  }
+
+  .nav-actions{
+    width:100%;
+    margin:0;
+  }
+
+  .menu-btn{
+    position:absolute;
+    right:10px;
+    top:17px;
+  }
+}
+
+/* TASKPOINT PRO — ACTION BUTTONS POLISH V4 */
+
+.action-card{
+  min-height:56px !important;
+  padding:10px 14px !important;
+  gap:10px !important;
+  justify-content:center !important;
+  align-items:center !important;
+  text-align:center !important;
+  -webkit-tap-highlight-color:transparent;
+}
+
+.action-card strong{
+  display:block !important;
+  line-height:1.15 !important;
+  letter-spacing:.1px;
+}
+
+.action-card-icon{
+  flex-shrink:0 !important;
+  transition:transform .2s ease, background .2s ease;
+}
+
+.action-card:hover .action-card-icon{
+  transform:scale(1.08);
+}
+
+.action-card:active{
+  transform:scale(.96) !important;
+}
+
+@media(max-width:760px){
+  .action-card{
+    min-height:58px !important;
+    padding:10px 8px !important;
+    gap:8px !important;
+  }
+
+  .action-card strong{
+    font-size:11px !important;
+  }
+}
+
+@media(max-width:420px){
+  .action-card{
+    min-height:56px !important;
+    padding:9px 6px !important;
+    gap:7px !important;
+  }
+
+  .action-card strong{
+    font-size:10px !important;
+  }
+}
