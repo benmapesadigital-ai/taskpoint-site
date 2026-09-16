@@ -533,7 +533,7 @@ function renderWithdrawalHistory(){
     }
 
     if(item.status==='submitted'){
-      statusText='OMBI LIMETUMWA';
+      statusText='MALIPO YAMEKAMILIKA✅';
     }
 
 
