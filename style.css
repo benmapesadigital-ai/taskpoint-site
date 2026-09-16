@@ -2075,3 +2075,94 @@ body{
     font-size:10px !important;
   }
 }
+/* TASKPOINT PRO — HEADER FINAL MOBILE V5 */
+
+@media(max-width:760px){
+
+  .nav{
+    position:sticky !important;
+    top:0;
+    height:auto !important;
+    min-height:74px !important;
+    padding:10px 12px 8px !important;
+    display:flex !important;
+    flex-wrap:wrap !important;
+    align-items:center !important;
+    justify-content:center !important;
+    gap:0 !important;
+    position:relative !important;
+  }
+
+  /* LOGO LEFT */
+  .logo{
+    width:100% !important;
+    height:52px !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:flex-start !important;
+    position:relative !important;
+    margin:0 !important;
+    padding:0 !important;
+  }
+
+  .brand-logo-img{
+    position:absolute !important;
+    left:2px !important;
+    top:50% !important;
+    transform:translateY(-50%) !important;
+    width:48px !important;
+    height:48px !important;
+    object-fit:contain !important;
+    z-index:3;
+  }
+
+  /* MAANDISHI KATI */
+  .brand-wordmark{
+    position:absolute !important;
+    left:50% !important;
+    top:50% !important;
+    transform:translate(-50%,-50%) !important;
+    white-space:nowrap !important;
+    text-align:center !important;
+    font-size:17px !important;
+    line-height:1.05 !important;
+    margin:0 !important;
+  }
+
+  .brand-wordmark small{
+    display:block !important;
+    margin-top:5px !important;
+    font-size:7px !important;
+    letter-spacing:.8px !important;
+  }
+
+  /* MENU KULIA */
+  .menu-btn{
+    display:block !important;
+    position:absolute !important;
+    right:12px !important;
+    top:18px !important;
+    z-index:20 !important;
+    font-size:29px !important;
+    line-height:1 !important;
+    padding:4px !important;
+  }
+
+  /* BUTTONS CHINI YA HEADER */
+  .nav-actions{
+    width:100% !important;
+    margin:8px 0 0 !important;
+    display:grid !important;
+    grid-template-columns:repeat(2,1fr) !important;
+    gap:9px !important;
+  }
+
+  .action-card{
+    width:100% !important;
+    min-height:58px !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    padding:9px 6px !important;
+  }
+}
