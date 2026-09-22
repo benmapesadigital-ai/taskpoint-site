@@ -1830,3 +1830,68 @@ body{
     opacity:.9;
   }
 }
+
+/* =========================================================
+   TASKPOINT PRO — COMPACT TOP ACTION BUTTONS
+   HII CODE INAATHIRI BUTTON 4 ZA JUU TU KWENYE SIMU
+   ========================================================= */
+
+@media (max-width: 760px){
+
+  .nav-actions{
+    gap: 9px !important;
+  }
+
+  .nav-actions .action-card{
+    min-height: 82px !important;
+    height: 82px !important;
+    padding: 9px 10px !important;
+    border-radius: 15px !important;
+    box-shadow: 0 7px 20px rgba(0,0,0,.20) !important;
+    transition: transform .18s ease, box-shadow .18s ease !important;
+  }
+
+  .nav-actions .action-card:active{
+    transform: scale(.985) !important;
+    box-shadow: 0 4px 13px rgba(0,0,0,.18) !important;
+  }
+
+  .nav-actions .action-card-icon{
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    font-size: 21px !important;
+  }
+
+  .nav-actions .action-card > strong{
+    display: block !important;
+    margin-left: 9px !important;
+    font-size: 14px !important;
+    line-height: 1.1 !important;
+    white-space: normal !important;
+    align-self: center !important;
+  }
+}
+
+/* Simu ndogo sana */
+@media (max-width: 390px){
+
+  .nav-actions .action-card{
+    min-height: 76px !important;
+    height: 76px !important;
+    padding: 8px 9px !important;
+    border-radius: 14px !important;
+  }
+
+  .nav-actions .action-card-icon{
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    font-size: 19px !important;
+  }
+
+  .nav-actions .action-card > strong{
+    margin-left: 8px !important;
+    font-size: 12px !important;
+  }
+}
