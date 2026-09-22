@@ -2107,3 +2107,113 @@ if ("serviceWorker" in navigator) {
     initTaskPointSMS();
   }
 })();
+
+/* =========================================================
+   TASKPOINT PRO — COMPACT TUTORIAL VIDEO
+   INAATHIRI TUTORIAL HII TU
+   ========================================================= */
+
+(function(){
+
+  const tutorialOpen = document.getElementById('tpTutorialOpen');
+  const tutorialVideo = document.getElementById('tpTutorialPreview');
+
+  if(!tutorialOpen || !tutorialVideo) return;
+
+  let tutorialModal = null;
+
+  function createTutorialModal(){
+
+    if(tutorialModal) return;
+
+    tutorialModal = document.createElement('div');
+
+    tutorialModal.className = 'tp-tutorial-modal';
+
+    tutorialModal.innerHTML = `
+      <div class="tp-tutorial-modal-box">
+
+        <button
+          type="button"
+          class="tp-tutorial-close"
+          aria-label="Funga">
+          ×
+        </button>
+
+        <div class="tp-tutorial-modal-title">
+          Namna ya kutumia mfumo wa TaskPoint Pro
+        </div>
+
+        <video
+          class="tp-tutorial-full-video"
+          controls
+          playsinline
+          preload="metadata">
+          <source
+            src="VID-20260902-WA0001.mp4"
+            type="video/mp4">
+        </video>
+
+      </div>
+    `;
+
+    document.body.appendChild(tutorialModal);
+
+    const closeBtn =
+      tutorialModal.querySelector('.tp-tutorial-close');
+
+    const fullVideo =
+      tutorialModal.querySelector('.tp-tutorial-full-video');
+
+    function closeTutorial(){
+
+      tutorialModal.classList.remove('show');
+
+      fullVideo.pause();
+      fullVideo.currentTime = 0;
+
+      document.body.classList.remove('tp-tutorial-open');
+
+    }
+
+    closeBtn.addEventListener('click',closeTutorial);
+
+    tutorialModal.addEventListener('click',function(e){
+
+      if(e.target === tutorialModal){
+        closeTutorial();
+      }
+
+    });
+
+    document.addEventListener('keydown',function(e){
+
+      if(
+        e.key === 'Escape' &&
+        tutorialModal.classList.contains('show')
+      ){
+        closeTutorial();
+      }
+
+    });
+
+  }
+
+  tutorialOpen.addEventListener('click',function(){
+
+    createTutorialModal();
+
+    tutorialModal.classList.add('show');
+
+    document.body.classList.add('tp-tutorial-open');
+
+    const fullVideo =
+      tutorialModal.querySelector('.tp-tutorial-full-video');
+
+    fullVideo.currentTime = 0;
+
+    fullVideo.play().catch(()=>{});
+
+  });
+
+})();
