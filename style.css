@@ -2308,3 +2308,145 @@ body{
 @media(max-width:390px){
 
   .
+
+  /* =========================================================
+   TASKPOINT PRO — TUTORIAL VIDEO POPUP
+   INAATHIRI POPUP YA TUTORIAL TU
+   ========================================================= */
+
+.tp-tutorial-modal{
+  position:fixed;
+  inset:0;
+  z-index:99999;
+
+  display:none;
+  align-items:center;
+  justify-content:center;
+
+  padding:16px;
+
+  background:rgba(3,10,25,.82);
+  backdrop-filter:blur(7px);
+}
+
+.tp-tutorial-modal.show{
+  display:flex;
+  animation:tpTutorialFade .2s ease;
+}
+
+.tp-tutorial-modal-box{
+  width:min(760px,100%);
+  max-height:90vh;
+
+  position:relative;
+
+  padding:10px;
+
+  border-radius:20px;
+
+  background:
+    linear-gradient(145deg,#071b3a,#102f62);
+
+  border:1px solid rgba(255,210,65,.65);
+
+  box-shadow:
+    0 25px 70px rgba(0,0,0,.48),
+    0 0 25px rgba(20,100,255,.18);
+
+  overflow:auto;
+}
+
+.tp-tutorial-modal-title{
+  padding:6px 42px 10px 7px;
+
+  color:#fff;
+
+  font-size:15px;
+  font-weight:900;
+  line-height:1.25;
+}
+
+.tp-tutorial-close{
+  position:absolute;
+
+  top:8px;
+  right:8px;
+
+  width:36px;
+  height:36px;
+
+  border:0;
+  border-radius:50%;
+
+  background:rgba(255,255,255,.12);
+
+  color:#fff;
+
+  font-size:25px;
+  line-height:1;
+
+  cursor:pointer;
+
+  z-index:3;
+}
+
+.tp-tutorial-close:hover{
+  background:rgba(255,255,255,.22);
+}
+
+.tp-tutorial-full-video{
+  width:100%;
+  max-height:75vh;
+
+  display:block;
+
+  border-radius:14px;
+
+  background:#000;
+
+  object-fit:contain;
+}
+
+/* Animation */
+@keyframes tpTutorialFade{
+
+  from{
+    opacity:0;
+    transform:scale(.98);
+  }
+
+  to{
+    opacity:1;
+    transform:scale(1);
+  }
+}
+
+/* Simu */
+@media(max-width:600px){
+
+  .tp-tutorial-modal{
+    padding:10px;
+  }
+
+  .tp-tutorial-modal-box{
+    width:100%;
+    padding:8px;
+    border-radius:17px;
+  }
+
+  .tp-tutorial-modal-title{
+    font-size:13px;
+    padding:5px 38px 8px 5px;
+  }
+
+  .tp-tutorial-full-video{
+    max-height:75vh;
+    border-radius:12px;
+  }
+
+  .tp-tutorial-close{
+    width:33px;
+    height:33px;
+    font-size:23px;
+  }
+}
