@@ -79,8 +79,6 @@ function updateClock(){
 updateClock();setInterval(updateClock,1000);
 
 $('#taskCount').textContent=`${countToday} TASKS LEO`;
-$('#heroTaskCount').textContent=countToday;
-$('#dailyReward').textContent=`Tsh ${money(reward)}`;
 $('#rewardNote').textContent=`Kila task leo: Tsh ${money(reward)}`;
 $('#cycleLabel').textContent='Kiasi cha task hubadilika kulingana na siku.';
 
