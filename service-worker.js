@@ -1,4 +1,4 @@
-const CACHE_NAME = "taskpointpro-v16";
+const CACHE_NAME = "taskpointpro-v16.1";
 
 const APP_SHELL = [
   "/",
