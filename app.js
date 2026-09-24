@@ -1149,7 +1149,7 @@ ensureWithdrawalHistoryUI();
   style.textContent=`
 
     .wallet-stats{
-      grid-template-columns:repeat(3,1fr)!important;
+      grid-template-columns:1fr 1fr!important;
     }
 
     .wallet-stat.withdrawn-stat{
