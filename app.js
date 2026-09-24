@@ -1271,7 +1271,7 @@ ensureWithdrawalHistoryUI();
       }
 
       .withdrawn-stat{
-        grid-column:1/-1;
+        grid-column:auto;
       }
 
       .withdraw-v2-actions{
