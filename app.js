@@ -65,6 +65,305 @@ function dailyShuffle(items){
 
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)],money=n=>new Intl.NumberFormat('sw-TZ').format(n);
 $$('[data-link="registration"]').forEach(a=>a.href=CONFIG.registrationUrl);$$('[data-link="whatsapp"]').forEach(a=>a.href=CONFIG.whatsappUrl);$$('[data-link="channel"]').forEach(a=>a.href=CONFIG.channelUrl);$('#phoneText').textContent=CONFIG.phoneDisplay;$('#emailText').textContent=CONFIG.email;$('#activationFee').textContent=money(CONFIG.activationFee);$('#activationBonus').textContent=money(CONFIG.activationBonus);
+/* =========================================================
+   TASKPOINT PRO — REGISTRATION REQUIREMENT NOTICE
+   ========================================================= */
+
+(function setupRegistrationNotice(){
+
+  if(document.getElementById('tpRegistrationNotice')) return;
+
+  const style=document.createElement('style');
+
+  style.id='tpRegistrationNoticeStyles';
+
+  style.textContent=`
+    #tpRegistrationNotice{
+      position:fixed;
+      inset:0;
+      z-index:100000;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+      background:rgba(2,9,18,.78);
+      backdrop-filter:blur(7px);
+    }
+
+    #tpRegistrationNotice.show{
+      display:flex;
+      animation:tpRegFade .2s ease;
+    }
+
+    .tp-reg-card{
+      position:relative;
+      width:min(470px,100%);
+      padding:28px 22px 22px;
+      border-radius:24px;
+      background:#fff;
+      box-shadow:0 30px 90px rgba(0,0,0,.4);
+      text-align:center;
+    }
+
+    .tp-reg-close{
+      position:absolute;
+      right:12px;
+      top:12px;
+      width:38px;
+      height:38px;
+      border:0;
+      border-radius:50%;
+      background:#eef2f6;
+      color:#172235;
+      font-size:24px;
+      cursor:pointer;
+    }
+
+    .tp-reg-badge{
+      display:inline-flex;
+      padding:7px 12px;
+      border-radius:999px;
+      background:#eefbf4;
+      color:#08783d;
+      font-size:11px;
+      font-weight:900;
+      margin-bottom:10px;
+    }
+
+    .tp-reg-card h2{
+      margin:0 0 10px;
+      color:#102033;
+      font-size:24px;
+      font-weight:950;
+    }
+
+    .tp-reg-card p{
+      margin:0 0 16px;
+      color:#5f6e7e;
+      font-size:13px;
+      line-height:1.65;
+    }
+
+    .tp-reg-fee{
+      margin:0 0 16px;
+      padding:14px;
+      border-radius:15px;
+      background:#f7f9fb;
+      border:1px solid #e2e8ef;
+      color:#102033;
+      font-size:22px;
+      font-weight:950;
+    }
+
+    .tp-reg-fee small{
+      display:block;
+      margin-top:4px;
+      color:#718092;
+      font-size:10px;
+      font-weight:800;
+    }
+
+    .tp-reg-actions{
+      display:grid;
+      gap:10px;
+    }
+
+    .tp-reg-continue,
+    .tp-reg-cancel{
+      width:100%;
+      padding:13px 16px;
+      border-radius:13px;
+      font-weight:900;
+      font-size:12px;
+      cursor:pointer;
+    }
+
+    .tp-reg-continue{
+      border:0;
+      background:#16d96f;
+      color:#062016;
+    }
+
+    .tp-reg-cancel{
+      border:1px solid #dce3ea;
+      background:#fff;
+      color:#334155;
+    }
+
+    @keyframes tpRegFade{
+      from{opacity:0}
+      to{opacity:1}
+    }
+
+    @media(max-width:600px){
+      .tp-reg-card{
+        padding:25px 16px 18px;
+      }
+
+      .tp-reg-card h2{
+        font-size:21px;
+      }
+    }
+  `;
+
+  document.head.appendChild(style);
+
+  const modal=document.createElement('div');
+
+  modal.id='tpRegistrationNotice';
+
+  modal.setAttribute('aria-hidden','true');
+
+  modal.innerHTML=`
+    <div
+      class="tp-reg-card"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="tpRegTitle"
+    >
+
+      <button
+        type="button"
+        class="tp-reg-close"
+        id="tpRegClose"
+        aria-label="Funga"
+      >
+        ×
+      </button>
+
+      <span class="tp-reg-badge">
+        ACCOUNT ACTIVATION
+      </span>
+
+      <h2 id="tpRegTitle">
+        KUJISAJILI NA TASKPOINT PRO
+      </h2>
+
+      <p>
+        Ili kuwezesha akaunti yako na kuanza kutumia mfumo
+        wa TaskPoint Pro, unahitaji kuwa na
+        <strong>mtaji wa TSh 14,500</strong>.
+      </p>
+
+      <p>
+        Kiasi hiki kinahitajika kwa ajili ya kuwezesha namba
+        uliyotumia wakati wa usajili ili akaunti yako iwe tayari
+        kwa matumizi na malipo ya mfumo.
+      </p>
+
+      <div class="tp-reg-fee">
+        TSh 14,500
+        <small>Ada/Mtaji wa kuwezesha akaunti</small>
+      </div>
+
+      <div class="tp-reg-actions">
+
+        <button
+          type="button"
+          class="tp-reg-continue"
+          id="tpRegContinue"
+        >
+          NINAENDELEA NA USAJILI →
+        </button>
+
+        <button
+          type="button"
+          class="tp-reg-cancel"
+          id="tpRegCancel"
+        >
+          SITAKI KUENDELEA
+        </button>
+
+      </div>
+
+    </div>
+  `;
+
+  document.body.appendChild(modal);
+
+  let pendingUrl=CONFIG.registrationUrl;
+
+  function closeNotice(){
+
+    modal.classList.remove('show');
+
+    modal.setAttribute(
+      'aria-hidden',
+      'true'
+    );
+
+  }
+
+  function openNotice(url){
+
+    pendingUrl=url || CONFIG.registrationUrl;
+
+    modal.classList.add('show');
+
+    modal.setAttribute(
+      'aria-hidden',
+      'false'
+    );
+
+  }
+
+  document.addEventListener('click',function(event){
+
+    const link=
+      event.target.closest('[data-link="registration"]');
+
+    if(!link) return;
+
+    event.preventDefault();
+
+    openNotice(
+      link.href || CONFIG.registrationUrl
+    );
+
+  });
+
+  document.getElementById('tpRegClose').onclick=
+    closeNotice;
+
+  document.getElementById('tpRegCancel').onclick=
+    closeNotice;
+
+  document.getElementById('tpRegContinue').onclick=
+    function(){
+
+      const url=
+        pendingUrl || CONFIG.registrationUrl;
+
+      closeNotice();
+
+      window.open(
+        url,
+        '_blank',
+        'noopener,noreferrer'
+      );
+
+    };
+
+  modal.addEventListener('click',function(event){
+
+    if(event.target===modal){
+      closeNotice();
+    }
+
+  });
+
+  document.addEventListener('keydown',function(event){
+
+    if(
+      event.key==='Escape' &&
+      modal.classList.contains('show')
+    ){
+      closeNotice();
+    }
+
+  });
+
+})();
 function tzDateISO(){const p=new Intl.DateTimeFormat('en-CA',{timeZone:'Africa/Dar_es_Salaam',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());const o=Object.fromEntries(p.map(x=>[x.type,x.value]));return `${o.year}-${o.month}-${o.day}`}
 const TODAY_NOTIFICATIONS=dailyShuffle(DEMO_NOTIFICATIONS);
 function dayIndex(){return Math.max(0,Math.floor((new Date(`${tzDateISO()}T00:00:00Z`)-new Date(`${CONFIG.anchorDate}T00:00:00Z`))/86400000))}
