@@ -1462,36 +1462,76 @@ $('#withdrawFinalBtn').onclick=()=>{
 
 }
 
-
 /* =========================================================
-   WITHDRAWAL CHOICE
+   PROFESSIONAL WITHDRAWAL SUMMARY
    ========================================================= */
 
 function showWithdrawalChoice(amount){
 
+  const fee = getWithdrawalFee(amount);
+  const netAmount = amount - fee;
+
   withdrawMessage.classList.add('show');
 
-  withdrawMessage.innerHTML=`
+  withdrawMessage.innerHTML = `
 
     <div class="withdraw-v2-box">
 
-      <p class="wv2-title">
-        🎉 HONGERA! OMBI LA WITHDRAWAL
-      </p>
+      <div class="withdraw-v2-header">
+        <div class="withdraw-v2-icon">💳</div>
 
-      <span class="withdraw-v2-amount">
-        Tsh ${money(amount)}
-      </span>
+        <div>
+          <p class="wv2-title">
+            WITHDRAWAL REQUEST
+          </p>
+
+          <span class="wv2-subtitle">
+            Taarifa za ombi lako
+          </span>
+        </div>
+      </div>
+
+
+      <div class="withdraw-v2-summary">
+
+        <div class="withdraw-v2-row">
+          <span>Kiasi cha Withdrawal</span>
+          <strong>
+            Tsh ${money(amount)}
+          </strong>
+        </div>
+
+
+        <div class="withdraw-v2-row fee-row">
+          <span>Makato ya huduma</span>
+          <strong>
+            - Tsh ${money(fee)}
+          </strong>
+        </div>
+
+
+        <div class="withdraw-v2-divider"></div>
+
+
+        <div class="withdraw-v2-row receive-row">
+          <span>Utapokea</span>
+
+          <strong>
+            Tsh ${money(netAmount)}
+          </strong>
+        </div>
+
+      </div>
+
 
       <p class="wv2-text">
 
-        Unataka kutoa kiasi hiki.
-        Kiasi kimehifadhiwa kwenye ombi lako la withdrawal.
-        Ili kuendelea, jaza taarifa zako na uwezeshe
-        account yako kwa mtaji wa
-        <b>Tsh ${money(CONFIG.activationFee)}</b>.
+        Ombi lako limehifadhiwa.
+        Ili kuendelea na hatua ya malipo,
+        chagua hali ya akaunti yako hapa chini.
 
       </p>
+
 
       <div class="withdraw-v2-actions">
 
@@ -1503,6 +1543,7 @@ function showWithdrawalChoice(amount){
           ✓ NIMESHALIPIA
         </button>
 
+
         <button
           type="button"
           class="withdraw-v2-unpaid"
@@ -1513,6 +1554,7 @@ function showWithdrawalChoice(amount){
 
       </div>
 
+
       <div id="withdrawV2Dynamic"></div>
 
     </div>
@@ -1522,14 +1564,17 @@ function showWithdrawalChoice(amount){
 
   /* NIMESHALIPIA */
 
-  $('#withdrawPaidBtn').onclick=showPayoutForm;
+  $('#withdrawPaidBtn').onclick =
+    showPayoutForm;
 
 
   /* SIJALIPIA */
 
-  $('#withdrawUnpaidBtn').onclick=()=>{
+  $('#withdrawUnpaidBtn').onclick = () => {
 
-    savePendingStatus('awaiting_activation');
+    savePendingStatus(
+      'awaiting_activation'
+    );
 
     window.open(
       WITHDRAW_REGISTRATION_URL,
@@ -1540,6 +1585,8 @@ function showWithdrawalChoice(amount){
   };
 
 }
+
+
 /* =========================================================
    FINAL WITHDRAWAL SUCCESS POPUP
    ========================================================= */
