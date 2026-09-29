@@ -1678,6 +1678,101 @@ function showWithdrawalChoice(amount){
           class="withdraw-v2-unpaid"
           id="withdrawUnpaidBtn"
         >
+/* =========================================================
+   COMPACT PROFESSIONAL WITHDRAWAL
+   ========================================================= */
+
+function showWithdrawalChoice(amount){
+
+  const fee = getWithdrawalFee(amount);
+  const receiveAmount = amount;
+  const totalDeducted = amount + fee;
+
+  withdrawMessage.classList.add('show');
+
+  withdrawMessage.innerHTML = `
+
+    <div class="tp-compact-withdraw">
+
+      <div class="tp-cw-head">
+
+        <div class="tp-cw-icon">
+          💳
+        </div>
+
+        <div>
+          <h3>Toa Pesa</h3>
+          <span>Safe & Instant Payouts</span>
+        </div>
+
+        <button
+          type="button"
+          class="tp-cw-close"
+          id="tpCompactWithdrawClose"
+        >
+          ×
+        </button>
+
+      </div>
+
+
+      <div class="tp-cw-balance">
+
+        <small>Main Wallet Balance</small>
+
+        <strong>
+          Tsh ${money(getWallet().balance)}
+        </strong>
+
+      </div>
+
+
+      <div class="tp-cw-row">
+        <span>Kiasi cha kutoa</span>
+        <strong>Tsh ${money(amount)}</strong>
+      </div>
+
+
+      <div class="tp-cw-row tp-cw-fee">
+        <span>Makato</span>
+        <strong>Tsh ${money(fee)}</strong>
+      </div>
+
+
+      <div class="tp-cw-receive">
+
+        <span>Pesa utakayopokea</span>
+
+        <strong>
+          Tsh ${money(receiveAmount)}
+        </strong>
+
+      </div>
+
+
+      <div class="tp-cw-total">
+
+        Jumla itakayokatwa kwenye Balance:
+        <b>Tsh ${money(totalDeducted)}</b>
+
+      </div>
+
+
+      <div class="tp-cw-actions">
+
+        <button
+          type="button"
+          class="tp-cw-paid"
+          id="withdrawPaidBtn"
+        >
+          ✓ NIMESHALIPIA
+        </button>
+
+        <button
+          type="button"
+          class="tp-cw-unpaid"
+          id="withdrawUnpaidBtn"
+        >
           SIJALIPIA
         </button>
 
@@ -1691,13 +1786,9 @@ function showWithdrawalChoice(amount){
   `;
 
 
-  /* NIMESHALIPIA */
-
   $('#withdrawPaidBtn').onclick =
     showPayoutForm;
 
-
-  /* SIJALIPIA */
 
   $('#withdrawUnpaidBtn').onclick = () => {
 
@@ -1713,7 +1804,14 @@ function showWithdrawalChoice(amount){
 
   };
 
-}
+
+  $('#tpCompactWithdrawClose').onclick = () => {
+
+    withdrawMessage.classList.remove('show');
+
+  };
+
+     }
 
 
 /* =========================================================
