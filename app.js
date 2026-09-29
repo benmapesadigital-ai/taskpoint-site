@@ -1953,84 +1953,170 @@ withdrawModal.addEventListener('click',e=>{
 
 
 /* =========================================================
+   TASKPOINT PRO — PROFESSIONAL WITHDRAWAL
+   ========================================================= */
+
+function getWithdrawalFee(amount){
+
+  if(amount >= 5000 && amount <= 20000){
+    return 500;
+  }
+
+  if(amount >= 21000 && amount <= 50000){
+    return 1000;
+  }
+
+  if(amount >= 51000 && amount <= 100000){
+    return 2000;
+  }
+
+  if(amount >= 100001 && amount <= 500000){
+    return 10000;
+  }
+
+  if(amount >= 500001 && amount <= 1000000){
+    return 15000;
+  }
+
+  return 0;
+}
+
+
+/* =========================================================
    SUBMIT WITHDRAWAL
    ========================================================= */
 
 $('#withdrawSubmit').onclick=()=>{
 
-  const amount=
+  const amount =
     Math.floor(
-      Number(withdrawInput.value)||0
+      Number(withdrawInput.value) || 0
     );
 
-  const w=getWallet();
+  const w = getWallet();
 
 
   /* INVALID AMOUNT */
 
-  if(!amount || amount<=0){
+  if(!amount || amount <= 0){
 
     withdrawMessage.classList.add('show');
 
     if(withdrawStrong){
-      withdrawStrong.textContent=
-        '⚠️ Weka kiasi sahihi cha kutoa';
+      withdrawStrong.textContent =
+        '⚠️ Weka kiasi cha kutoa';
     }
 
     if(withdrawSpan){
-      withdrawSpan.textContent=
-        'Andika kiasi cha fedha unachotaka kutoa kisha bonyeza WITHDRAW tena.';
+      withdrawSpan.textContent =
+        'Weka kiasi cha fedha unachotaka kutoa.';
     }
 
     return;
-
   }
+
+
+  /* MINIMUM WITHDRAWAL */
+
+  if(amount < 5000){
+
+    withdrawMessage.classList.add('show');
+
+    if(withdrawStrong){
+      withdrawStrong.textContent =
+        '⚠️ Minimum withdrawal ni Tsh 5,000';
+    }
+
+    if(withdrawSpan){
+      withdrawSpan.textContent =
+        'Kiasi cha chini kabisa unachoweza kutoa ni Tsh 5,000.';
+    }
+
+    return;
+  }
+
+
+  /* MAXIMUM WITHDRAWAL */
+
+  if(amount > 1000000){
+
+    withdrawMessage.classList.add('show');
+
+    if(withdrawStrong){
+      withdrawStrong.textContent =
+        '⚠️ Maximum withdrawal ni Tsh 1,000,000';
+    }
+
+    if(withdrawSpan){
+      withdrawSpan.textContent =
+        'Kiasi cha juu kabisa cha withdrawal ni Tsh 1,000,000.';
+    }
+
+    return;
+  }
+
+
+  /* CALCULATE WITHDRAWAL FEE */
+
+  const fee = getWithdrawalFee(amount);
+
+  const netAmount = amount - fee;
 
 
   /* BALANCE NOT ENOUGH */
 
-  if(amount>w.balance){
+  if(amount > w.balance){
 
     withdrawMessage.classList.add('show');
 
     if(withdrawStrong){
-      withdrawStrong.textContent=
+      withdrawStrong.textContent =
         '⚠️ Balance haitoshi';
     }
 
     if(withdrawSpan){
-      withdrawSpan.textContent=
-        `Balance yako ni Tsh ${money(w.balance)}. Weka kiasi kisichozidi Balance.`;
+      withdrawSpan.textContent =
+        `Balance yako ni Tsh ${money(w.balance)}. ` +
+        `Weka kiasi kisichozidi Balance.`;
     }
 
     return;
-
   }
 
 
-  /* REMOVE FROM BALANCE */
+  /* REMOVE REQUESTED AMOUNT FROM BALANCE */
 
-  w.balance-=amount;
-
-
-  /* ADD TO WITHDRAWN */
-
-  w.withdrawn+=amount;
+  w.balance -= amount;
 
 
-  /* SAVE WITHDRAWAL REQUEST */
+  /* ADD TO TOTAL WITHDRAWN */
 
-  w.pendingWithdrawal={
-    amount,
-    status:'awaiting_activation',
-    createdAt:new Date().toISOString()
+  w.withdrawn += amount;
+
+
+  /* SAVE ACTIVE WITHDRAWAL */
+
+  w.pendingWithdrawal = {
+
+    amount: amount,
+
+    fee: fee,
+
+    netAmount: netAmount,
+
+    status: 'awaiting_activation',
+
+    createdAt: new Date().toISOString()
+
   };
 
+
+  /* SAVE WALLET */
 
   saveWallet(w);
 
 
-  /* SHOW SUCCESS / CHOICE */
+  /* SHOW PROFESSIONAL WITHDRAWAL SUMMARY */
 
   showWithdrawalChoice(amount);
 
