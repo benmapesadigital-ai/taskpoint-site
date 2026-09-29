@@ -1279,7 +1279,136 @@ ensureWithdrawalHistoryUI();
       }
 
     }
+/* =========================================
+   PROFESSIONAL WITHDRAWAL SUMMARY
+   ========================================= */
 
+.withdraw-v2-header{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:16px;
+}
+
+.withdraw-v2-icon{
+  width:44px;
+  height:44px;
+  border-radius:14px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(135deg,#ffd84d,#ffb300);
+  color:#071a2b;
+  font-size:20px;
+  box-shadow:0 8px 20px rgba(255,184,0,.22);
+}
+
+.withdraw-v2-header .wv2-title{
+  margin:0;
+  font-size:15px;
+  font-weight:950;
+  letter-spacing:.3px;
+}
+
+.withdraw-v2-subtitle{
+  display:block;
+  margin-top:3px;
+  color:#a9bdcf;
+  font-size:11px;
+  font-weight:700;
+}
+
+.withdraw-v2-summary{
+  margin-top:8px;
+  padding:5px 0;
+}
+
+.withdraw-v2-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  padding:13px 0;
+  border-bottom:1px solid rgba(255,255,255,.09);
+}
+
+.withdraw-v2-row:last-child{
+  border-bottom:0;
+}
+
+.withdraw-v2-row span{
+  color:#b9c9d8;
+  font-size:12px;
+  font-weight:700;
+}
+
+.withdraw-v2-row strong{
+  color:#fff;
+  font-size:13px;
+  font-weight:950;
+  text-align:right;
+}
+
+.withdraw-v2-row.fee-row strong{
+  color:#ffcf54;
+}
+
+.withdraw-v2-divider{
+  height:1px;
+  margin:4px 0;
+  background:rgba(255,255,255,.14);
+}
+
+.withdraw-v2-row.receive-row{
+  padding:15px 13px;
+  margin-top:8px;
+  border:1px solid rgba(22,217,111,.25);
+  border-radius:13px;
+  background:rgba(22,217,111,.07);
+}
+
+.withdraw-v2-row.receive-row span{
+  color:#bfead0;
+}
+
+.withdraw-v2-row.receive-row strong{
+  color:#16d96f;
+  font-size:16px;
+}
+
+.withdraw-v2-box .wv2-text{
+  margin-top:13px;
+}
+
+@media(max-width:760px){
+
+  .withdraw-v2-header{
+    align-items:flex-start;
+  }
+
+  .withdraw-v2-icon{
+    width:42px;
+    height:42px;
+    flex:0 0 42px;
+  }
+
+  .withdraw-v2-row{
+    padding:12px 0;
+  }
+
+  .withdraw-v2-row span{
+    font-size:11px;
+  }
+
+  .withdraw-v2-row strong{
+    font-size:12px;
+  }
+
+  .withdraw-v2-row.receive-row strong{
+    font-size:15px;
+  }
+
+   }
   `;
 
   document.head.appendChild(style);
