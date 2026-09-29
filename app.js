@@ -2236,12 +2236,16 @@ $('#withdrawSubmit').onclick=()=>{
 
   const fee = getWithdrawalFee(amount);
 
-  const netAmount = amount - fee;
+/* Amount user wants to receive */
+const receiveAmount = amount;
+
+/* Total deducted from wallet */
+const totalDeducted = amount + fee;
 
 
   /* BALANCE NOT ENOUGH */
 
-  if(amount > w.balance){
+  if(totalDeducted > w.balance){
 
     withdrawMessage.classList.add('show');
 
@@ -2260,31 +2264,26 @@ $('#withdrawSubmit').onclick=()=>{
   }
 
 
-  /* REMOVE REQUESTED AMOUNT FROM BALANCE */
+  w.balance -= totalDeducted;
 
-  w.balance -= amount;
-
-
-  /* ADD TO TOTAL WITHDRAWN */
-
-  w.withdrawn += amount;
+  w.withdrawn += receiveAmount;
 
 
   /* SAVE ACTIVE WITHDRAWAL */
 
-  w.pendingWithdrawal = {
+w.pendingWithdrawal = {
 
-    amount: amount,
+  amount: receiveAmount,
 
-    fee: fee,
+  fee: fee,
 
-    netAmount: netAmount,
+  totalDeducted: totalDeducted,
 
-    status: 'awaiting_activation',
+  status: 'awaiting_activation',
 
-    createdAt: new Date().toISOString()
+  createdAt: new Date().toISOString()
 
-  };
+};
 
 
   /* SAVE WALLET */
