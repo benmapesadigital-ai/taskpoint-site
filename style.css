@@ -2399,3 +2399,220 @@ body{
     font-size:27px !important;
   }
 }
+
+/* =========================================================
+   TASKPOINT PRO — WITHDRAW MOBILE COMPACT FIX
+   Layout only — no functionality changed
+   ========================================================= */
+
+@media (max-width: 760px){
+
+  /* Modal yenyewe ibaki ndani ya screen */
+  .withdraw-modal{
+    padding:10px !important;
+    align-items:center !important;
+    justify-content:center !important;
+    overflow:hidden !important;
+  }
+
+  /* White Withdraw Card */
+  .withdraw-card{
+    width:100% !important;
+    max-width:500px !important;
+    max-height:94vh !important;
+    overflow-y:auto !important;
+    overflow-x:hidden !important;
+    padding:20px 16px !important;
+    border-radius:22px !important;
+  }
+
+  /* Kichwa */
+  .withdraw-card h2{
+    font-size:26px !important;
+    line-height:1.1 !important;
+    margin:4px 0 6px !important;
+  }
+
+  .withdraw-card > p{
+    font-size:11px !important;
+    line-height:1.45 !important;
+    margin:5px 0 10px !important;
+  }
+
+  .withdraw-card label{
+    font-size:10px !important;
+    margin:10px 0 5px !important;
+  }
+
+  .withdraw-card input{
+    padding:12px !important;
+    font-size:14px !important;
+    height:46px !important;
+  }
+
+  .withdraw-card > .btn{
+    min-height:46px !important;
+    padding:11px !important;
+    font-size:12px !important;
+  }
+
+  /* Dark Toa Pesa card */
+  .tp-compact-withdraw{
+    padding:13px !important;
+    margin-top:10px !important;
+    border-radius:17px !important;
+  }
+
+  .tp-cw-head{
+    gap:8px !important;
+    margin-bottom:9px !important;
+  }
+
+  .tp-cw-icon{
+    width:38px !important;
+    height:38px !important;
+    flex:0 0 38px !important;
+    border-radius:11px !important;
+    font-size:16px !important;
+  }
+
+  .tp-cw-head h3{
+    font-size:16px !important;
+  }
+
+  .tp-cw-head span{
+    font-size:8px !important;
+  }
+
+  .tp-cw-close{
+    width:27px !important;
+    height:27px !important;
+    font-size:18px !important;
+  }
+
+  /* Balance */
+  .tp-cw-balance{
+    padding:9px 11px !important;
+    margin-bottom:7px !important;
+    border-radius:10px !important;
+  }
+
+  .tp-cw-balance small{
+    font-size:8px !important;
+    margin-bottom:2px !important;
+  }
+
+  .tp-cw-balance strong{
+    font-size:14px !important;
+  }
+
+  /* Kiasi + Makato */
+  .tp-cw-row{
+    padding:7px 0 !important;
+  }
+
+  .tp-cw-row span{
+    font-size:9px !important;
+  }
+
+  .tp-cw-row strong{
+    font-size:11px !important;
+  }
+
+  /* Pesa utakayopokea */
+  .tp-cw-receive{
+    margin-top:6px !important;
+    padding:9px 10px !important;
+    border-radius:10px !important;
+  }
+
+  .tp-cw-receive span{
+    font-size:9px !important;
+  }
+
+  .tp-cw-receive strong{
+    font-size:14px !important;
+  }
+
+  .tp-cw-total{
+    padding:6px 1px 0 !important;
+    font-size:8px !important;
+  }
+
+  /* Buttons */
+  .tp-cw-actions{
+    grid-template-columns:1fr 1fr !important;
+    gap:6px !important;
+    margin-top:8px !important;
+  }
+
+  .tp-cw-actions button{
+    min-height:38px !important;
+    padding:8px 4px !important;
+    border-radius:9px !important;
+    font-size:8px !important;
+  }
+
+  /* Namba ya simu */
+  .withdraw-v2-form{
+    margin-top:9px !important;
+    padding-top:9px !important;
+  }
+
+  .withdraw-v2-form label{
+    font-size:9px !important;
+    margin-bottom:5px !important;
+  }
+
+  .withdraw-v2-form input{
+    padding:10px !important;
+    height:42px !important;
+    font-size:13px !important;
+    border-radius:9px !important;
+  }
+
+  .withdraw-v2-submit{
+    margin-top:7px !important;
+    min-height:42px !important;
+    padding:9px !important;
+    border-radius:9px !important;
+    font-size:9px !important;
+  }
+
+  .withdraw-v2-status{
+    margin-top:7px !important;
+    font-size:9px !important;
+    line-height:1.4 !important;
+  }
+}
+
+
+/* Very small phones */
+@media (max-width:390px){
+
+  .withdraw-modal{
+    padding:7px !important;
+  }
+
+  .withdraw-card{
+    max-height:95vh !important;
+    padding:16px 13px !important;
+    border-radius:19px !important;
+  }
+
+  .withdraw-card h2{
+    font-size:23px !important;
+  }
+
+  .withdraw-card > p{
+    font-size:10px !important;
+  }
+
+  .tp-compact-withdraw{
+    padding:11px !important;
+  }
+
+  .tp-cw-actions button{
+    font-size:7.5px !important;
+  }
+    }
